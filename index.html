@@ -380,6 +380,108 @@
   .board-body { font-size: 13px; color: var(--white-60); line-height: 1.7; white-space: pre-line; }
   .board-empty { font-size: 12px; color: var(--white-40); font-family: 'Space Mono', monospace; padding: 20px 0; }
 
+  /* ── 写真表示 ── */
+  .post-image {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+    background: rgba(255,255,255,0.05);
+    aspect-ratio: 16/9;
+    position: relative;
+  }
+  .post-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  .post-card:hover .post-image img {
+    transform: scale(1.03);
+  }
+  .post-image-count {
+    position: absolute;
+    bottom: 8px; right: 10px;
+    font-size: 10px;
+    font-family: 'Space Mono', monospace;
+    color: white;
+    background: rgba(0,0,0,0.55);
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+  /* モーダル内写真 */
+  .modal-images {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .modal-images.count-1 { grid-template-columns: 1fr; }
+  .modal-images.count-2 { grid-template-columns: 1fr 1fr; }
+  .modal-images.count-3 { grid-template-columns: 1fr 1fr; }
+  .modal-images.count-3 .modal-img-wrap:first-child { grid-column: 1 / -1; }
+  .modal-images.count-many { grid-template-columns: 1fr 1fr; }
+  .modal-img-wrap {
+    overflow: hidden;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.06);
+    aspect-ratio: 4/3;
+    cursor: zoom-in;
+  }
+  .modal-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .modal-img-wrap:hover img { transform: scale(1.04); }
+
+  /* ライトボックス */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 400;
+    background: rgba(0,0,10,0.93);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+  .lightbox img {
+    max-width: 92vw; max-height: 88vh;
+    border-radius: 10px;
+    object-fit: contain;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.8);
+  }
+  .lightbox-close {
+    position: absolute; top: 20px; right: 20px;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(255,255,255,0.12); border: none;
+    color: white; font-size: 18px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+  .lightbox-nav {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.12); border: none;
+    color: white; font-size: 22px; cursor: pointer;
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+  .lightbox-counter {
+    position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+    font-size: 11px; color: rgba(255,255,255,0.5);
+    font-family: 'Space Mono', monospace; letter-spacing: 2px;
+  }
+
   @media (max-width: 680px) {
     .layout { flex-direction: column; padding: 0 16px 40px; }
     .sidebar { width: 100%; position: static; }
@@ -469,6 +571,15 @@
   </div>
 </div>
 
+<!-- ライトボックス -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOutside(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+  <button class="lightbox-nav lightbox-prev" onclick="lbNav(-1)">‹</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="lightbox-nav lightbox-next" onclick="lbNav(1)">›</button>
+  <div class="lightbox-counter" id="lightbox-counter"></div>
+</div>
+
 <script>
   const PASSWORD = 'orbitt2026';
   let allPosts = [];
@@ -514,7 +625,26 @@
     const now = new Date();
     const isNew = (now - postDate) / (1000*60*60*24) <= 3;
     const dateLabel = postDate.toLocaleDateString('ja-JP', { year:'numeric', month:'2-digit', day:'2-digit' }).replace(/\//g,'.');
-    return { title, type, body, videoUrl, notionUrl, dateLabel, isNew };
+
+    // 画像URLを取得（Files、Photo、画像など複数プロパティ名に対応）
+    const imageUrls = extractImageUrls(props);
+
+    return { title, type, body, videoUrl, notionUrl, dateLabel, isNew, imageUrls };
+  }
+
+  function extractImageUrls(props) {
+    const candidates = ['Photo', 'Photos', 'Image', 'Images', 'Files', 'ファイル', '画像', '写真'];
+    for (const key of candidates) {
+      const prop = props[key];
+      if (!prop) continue;
+      // type: files
+      if (prop.type === 'files' && prop.files?.length) {
+        return prop.files.map(f => f.file?.url || f.external?.url).filter(Boolean);
+      }
+    }
+    // カバー画像
+    if (props._cover) return [props._cover];
+    return [];
   }
 
   function renderPosts(posts) {
@@ -524,7 +654,7 @@
       return;
     }
     container.innerHTML = posts.map((post, idx) => {
-      const { title, type, body, videoUrl, dateLabel, isNew } = getPostData(post);
+      const { title, type, body, videoUrl, dateLabel, isNew, imageUrls } = getPostData(post);
 
       const videoBadge = videoUrl
         ? `<div class="video-badge"><div class="play-dot"></div>動画あり</div>`
@@ -532,6 +662,14 @@
 
       const previewText = body
         ? `<div class="post-preview">${escHtml(body)}</div>`
+        : '';
+
+      // カードサムネイル（先頭1枚）
+      const imgPreview = imageUrls.length
+        ? `<div class="post-image">
+             <img src="${imageUrls[0]}" alt="${escHtml(title)}" loading="lazy" onerror="this.parentElement.style.display='none'">
+             ${imageUrls.length > 1 ? `<div class="post-image-count">+${imageUrls.length}</div>` : ''}
+           </div>`
         : '';
 
       return `
@@ -544,6 +682,7 @@
             </div>
             ${type ? `<div class="post-type">${type}</div>` : ''}
           </div>
+          ${imgPreview}
           <div class="post-title">${escHtml(title)}</div>
           ${videoBadge}
           ${previewText}
@@ -563,7 +702,7 @@
     const post = allPosts[idx];
     if (!post) return;
 
-    const { title, type, body, videoUrl, notionUrl, dateLabel, isNew } = getPostData(post);
+    const { title, type, body, videoUrl, notionUrl, dateLabel, isNew, imageUrls } = getPostData(post);
 
     const videoSection = videoUrl ? `
       <a href="${videoUrl}" target="_blank" class="modal-video-link">
@@ -581,6 +720,22 @@
         Notion で全文を見る
       </a>` : '';
 
+    // 写真グリッド
+    let imagesSection = '';
+    if (imageUrls.length) {
+      const countClass = imageUrls.length === 1 ? 'count-1'
+                       : imageUrls.length === 2 ? 'count-2'
+                       : imageUrls.length === 3 ? 'count-3'
+                       : 'count-many';
+      const shown = imageUrls.slice(0, 4);
+      const imgItems = shown.map((url, i) =>
+        `<div class="modal-img-wrap" onclick="openLightbox(event, ${idx}, ${i})">
+           <img src="${url}" alt="写真 ${i+1}" loading="lazy" onerror="this.parentElement.style.display='none'">
+         </div>`
+      ).join('');
+      imagesSection = `<div class="modal-images ${countClass}">${imgItems}</div>`;
+    }
+
     document.getElementById('modal-content').innerHTML = `
       <div class="modal-meta">
         <div class="modal-av">R</div>
@@ -592,6 +747,7 @@
       </div>
       <div class="modal-title">${escHtml(title)}</div>
       <div class="modal-divider"></div>
+      ${imagesSection}
       ${body ? `<div class="modal-body">${escHtml(body)}</div>` : ''}
       ${videoSection}
       ${notionSection}
@@ -675,6 +831,52 @@
   }
 
   renderBoard();
+
+  // ── ライトボックス ──
+  let lbImages = [];
+  let lbIndex = 0;
+
+  function openLightbox(e, postIdx, imgIdx) {
+    e.stopPropagation();
+    const post = allPosts[postIdx];
+    if (!post) return;
+    const { imageUrls } = getPostData(post);
+    lbImages = imageUrls;
+    lbIndex = imgIdx;
+    updateLightbox();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function updateLightbox() {
+    document.getElementById('lightbox-img').src = lbImages[lbIndex];
+    document.getElementById('lightbox-counter').textContent =
+      lbImages.length > 1 ? `${lbIndex + 1} / ${lbImages.length}` : '';
+    document.querySelector('.lightbox-prev').style.display = lbImages.length > 1 ? '' : 'none';
+    document.querySelector('.lightbox-next').style.display = lbImages.length > 1 ? '' : 'none';
+  }
+
+  function lbNav(dir) {
+    lbIndex = (lbIndex + dir + lbImages.length) % lbImages.length;
+    updateLightbox();
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxOutside(e) {
+    if (e.target === document.getElementById('lightbox')) closeLightbox();
+  }
+
+  document.addEventListener('keydown', e => {
+    const lb = document.getElementById('lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') lbNav(1);
+    if (e.key === 'ArrowLeft') lbNav(-1);
+  });
 </script>
 </body>
 </html>
