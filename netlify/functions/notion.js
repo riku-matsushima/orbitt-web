@@ -11,8 +11,7 @@ exports.handler = async (event) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        filter: { property: 'Published', checkbox: { equals: true } },
-        sorts: [{ property: 'Date', direction: 'descending' }]
+        filter: { property: 'Published', checkbox: { equals: true } }
       })
     });
 
