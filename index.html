@@ -242,77 +242,118 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* ── モーダル ── */
+  /* ── モーダル（フルページ） ── */
   .modal-overlay {
     position: fixed; inset: 0; z-index: 200;
-    background: rgba(1,0,60,0.85);
-    backdrop-filter: blur(16px);
-    display: flex; align-items: center; justify-content: center;
-    padding: 24px;
+    background: var(--blue);
+    display: flex; flex-direction: column;
     opacity: 0; pointer-events: none;
-    transition: opacity 0.25s;
+    transition: opacity 0.3s;
+    overflow-y: auto;
   }
   .modal-overlay.open {
     opacity: 1; pointer-events: all;
   }
+
+  /* トップバー */
+  .modal-topbar {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(2,0,128,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--white-10);
+    padding: 12px 24px;
+    display: flex; align-items: center; gap: 16px;
+    flex-shrink: 0;
+  }
+  .modal-back-btn {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--white-10); border: 1px solid var(--white-20);
+    border-radius: 8px; padding: 6px 14px;
+    color: var(--white-60); font-size: 12px; cursor: pointer;
+    font-family: 'Space Mono', monospace; letter-spacing: 1px;
+    transition: all 0.2s; text-decoration: none;
+  }
+  .modal-back-btn:hover { background: var(--white-20); color: white; }
+  .modal-topbar-logo {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px; letter-spacing: 4px; color: var(--white-40);
+    margin-left: auto;
+  }
+
+  /* ページ本体 */
   .modal {
-    background: #06048a;
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 20px;
-    width: 100%; max-width: 640px;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 32px;
-    transform: translateY(24px);
-    transition: transform 0.25s;
-    position: relative;
+    width: 100%; max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+    transform: translateY(20px);
+    transition: transform 0.3s;
   }
   .modal-overlay.open .modal {
     transform: translateY(0);
   }
-  .modal-close {
-    position: absolute; top: 16px; right: 16px;
-    width: 32px; height: 32px; border-radius: 50%;
-    background: var(--white-10); border: none;
-    color: white; font-size: 16px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s;
-  }
-  .modal-close:hover { background: var(--white-20); }
-  .modal-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  .modal-close { display: none; } /* topbar の戻るボタンを使うので非表示 */
+
+  .modal-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
   .modal-av {
-    width: 36px; height: 36px; border-radius: 50%;
+    width: 40px; height: 40px; border-radius: 50%;
     background: #2200ff;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Mono', monospace; font-size: 13px; flex-shrink: 0;
+    font-family: 'Space Mono', monospace; font-size: 14px; flex-shrink: 0;
   }
-  .modal-name { font-size: 13px; font-weight: 500; }
-  .modal-date { font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; }
+  .modal-name { font-size: 14px; font-weight: 500; }
+  .modal-date { font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; margin-top: 2px; }
   .modal-type {
     margin-left: auto; font-size: 10px;
     font-family: 'Space Mono', monospace;
     background: var(--white-10); color: var(--white-60);
-    padding: 3px 10px; border-radius: 20px; letter-spacing: 1px;
+    padding: 4px 12px; border-radius: 20px; letter-spacing: 1px;
   }
-  .modal-title { font-size: 20px; font-weight: 500; line-height: 1.4; margin-bottom: 16px; }
-  .modal-divider { height: 1px; background: var(--white-10); margin-bottom: 16px; }
-  .modal-body { font-size: 14px; color: var(--white-60); line-height: 1.8; white-space: pre-line; margin-bottom: 20px; }
+  .modal-title {
+    font-size: 26px; font-weight: 500; line-height: 1.4;
+    margin-bottom: 20px; letter-spacing: -0.3px;
+  }
+  .modal-divider { height: 1px; background: var(--white-10); margin-bottom: 24px; }
+  .modal-body {
+    font-size: 15px; color: var(--white-60); line-height: 1.9;
+    margin-bottom: 28px;
+  }
+  /* rich_text インライン書式 */
+  .modal-body b  { font-weight: 700; color: white; }
+  .modal-body em { font-style: italic; }
+  .modal-body u  { text-decoration: underline; text-underline-offset: 3px; }
+  .modal-body s  { text-decoration: line-through; }
+  .modal-body code {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    background: rgba(255,255,255,0.1);
+    padding: 2px 6px; border-radius: 4px;
+    color: #aef;
+  }
+  .modal-body .notion-color-red    { color: #ff7979; }
+  .modal-body .notion-color-orange { color: #ffaa55; }
+  .modal-body .notion-color-yellow { color: #ffe066; }
+  .modal-body .notion-color-green  { color: #66ffaa; }
+  .modal-body .notion-color-blue   { color: #66aaff; }
+  .modal-body .notion-color-purple { color: #cc88ff; }
+  .modal-body .notion-color-pink   { color: #ff88cc; }
+  .modal-body .notion-color-gray   { color: rgba(255,255,255,0.4); }
+
   .modal-video-link {
-    display: flex; align-items: center; gap: 12px;
-    background: rgba(0,0,0,0.25); border: 1px solid var(--white-20);
-    border-radius: 12px; padding: 14px 18px;
-    color: white; text-decoration: none; font-size: 13px;
-    transition: background 0.2s; margin-bottom: 20px;
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--white-20);
+    border-radius: 14px; padding: 16px 20px;
+    color: white; text-decoration: none; font-size: 14px;
+    transition: background 0.2s; margin-bottom: 24px;
   }
-  .modal-video-link:hover { background: rgba(0,0,0,0.4); }
+  .modal-video-link:hover { background: rgba(255,255,255,0.1); }
   .modal-play-icon {
-    width: 36px; height: 36px; background: white; border-radius: 50%;
+    width: 40px; height: 40px; background: white; border-radius: 50%;
     display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
   .modal-notion-btn {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
+    display: inline-flex; align-items: center; gap: 8px;
     border: 1px solid var(--white-20); border-radius: 10px;
-    padding: 10px 20px; font-size: 12px;
+    padding: 10px 22px; font-size: 12px;
     font-family: 'Space Mono', monospace; color: var(--white-60);
     text-decoration: none; transition: all 0.2s; margin-top: 8px;
   }
@@ -488,8 +529,9 @@
     header { padding: 14px 16px; }
     .profile-row { padding: 0 16px; }
     .board-section { padding: 0 16px 40px; }
-    .modal { padding: 24px 20px; }
-    .modal-title { font-size: 17px; }
+    .modal { padding: 32px 20px 60px; }
+    .modal-title { font-size: 20px; }
+    .modal-topbar { padding: 10px 16px; }
   }
 </style>
 </head>
@@ -564,7 +606,11 @@
 </div>
 
 <!-- ── 投稿詳細モーダル ── -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-topbar">
+    <button class="modal-back-btn" onclick="closeModal()">← 戻る</button>
+    <div class="modal-topbar-logo">ORBITT</div>
+  </div>
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modal-content"></div>
@@ -613,11 +659,57 @@
     }
   }
 
+  // ── rich_text → HTML 変換 ──
+  // annotations（bold/italic/underline/strikethrough/code/color）を
+  // インラインHTMLタグに変換し、絵文字はそのまま保持する
+  function richTextToHtml(richTexts) {
+    if (!richTexts || !richTexts.length) return '';
+    return richTexts.map(rt => {
+      // plain_text が未定義の場合は空
+      let text = rt.plain_text || '';
+      // 改行を <br> に
+      text = text.split('\n').map(line => escHtml(line)).join('<br>');
+
+      const ann = rt.annotations || {};
+
+      // code は他のタグより先にラップ（内部のHTMLエスケープ済みテキストをそのまま）
+      if (ann.code) {
+        text = `<code>${text}</code>`;
+      } else {
+        // color
+        const color = ann.color;
+        if (color && color !== 'default') {
+          // 背景色は無視、前景色のみ対応
+          const colorClass = color.replace('_background', '');
+          text = `<span class="notion-color-${colorClass}">${text}</span>`;
+        }
+        if (ann.bold)          text = `<b>${text}</b>`;
+        if (ann.italic)        text = `<em>${text}</em>`;
+        if (ann.underline)     text = `<u>${text}</u>`;
+        if (ann.strikethrough) text = `<s>${text}</s>`;
+      }
+
+      // リンク
+      if (rt.href) {
+        text = `<a href="${escHtml(rt.href)}" target="_blank" style="color:inherit;opacity:0.8;text-decoration:underline;">${text}</a>`;
+      }
+
+      return text;
+    }).join('');
+  }
+
   function getPostData(post) {
     const props = post.properties;
     const title = props.Name?.title?.[0]?.plain_text || props.Title?.title?.[0]?.plain_text || '(無題)';
     const type = props.Type?.select?.name || props.種類?.select?.name || '';
-    const body = props.Text?.rich_text?.[0]?.plain_text || props.Body?.rich_text?.[0]?.plain_text || props.内容?.rich_text?.[0]?.plain_text || '';
+
+    // プレビュー用 plain_text（カード表示用）
+    const bodyRichText = props.Text?.rich_text || props.Body?.rich_text || props.内容?.rich_text || [];
+    const body = bodyRichText.map(rt => rt.plain_text || '').join('');
+
+    // モーダル用 HTML（書式あり）
+    const bodyHtml = richTextToHtml(bodyRichText);
+
     const videoUrl = props.VideoURL?.url || props.URL?.url || '';
     const notionUrl = post.url || '';
     const dateStr = props.Date?.date?.start || props.日付?.date?.start || '';
@@ -626,10 +718,9 @@
     const isNew = (now - postDate) / (1000*60*60*24) <= 3;
     const dateLabel = postDate.toLocaleDateString('ja-JP', { year:'numeric', month:'2-digit', day:'2-digit' }).replace(/\//g,'.');
 
-    // 画像URLを取得（Files、Photo、画像など複数プロパティ名に対応）
     const imageUrls = extractImageUrls(props);
 
-    return { title, type, body, videoUrl, notionUrl, dateLabel, isNew, imageUrls };
+    return { title, type, body, bodyHtml, videoUrl, notionUrl, dateLabel, isNew, imageUrls };
   }
 
   function extractImageUrls(props) {
@@ -702,7 +793,7 @@
     const post = allPosts[idx];
     if (!post) return;
 
-    const { title, type, body, videoUrl, notionUrl, dateLabel, isNew, imageUrls } = getPostData(post);
+    const { title, type, body, bodyHtml, videoUrl, notionUrl, dateLabel, isNew, imageUrls } = getPostData(post);
 
     const videoSection = videoUrl ? `
       <a href="${videoUrl}" target="_blank" class="modal-video-link">
@@ -748,22 +839,19 @@
       <div class="modal-title">${escHtml(title)}</div>
       <div class="modal-divider"></div>
       ${imagesSection}
-      ${body ? `<div class="modal-body">${escHtml(body)}</div>` : ''}
+      ${body ? `<div class="modal-body">${bodyHtml}</div>` : ''}
       ${videoSection}
       ${notionSection}
     `;
 
     document.getElementById('modal-overlay').classList.add('open');
+    document.getElementById('modal-overlay').scrollTop = 0;
     document.body.style.overflow = 'hidden';
   }
 
   function closeModal() {
     document.getElementById('modal-overlay').classList.remove('open');
     document.body.style.overflow = '';
-  }
-
-  function closeModalOutside(e) {
-    if (e.target === document.getElementById('modal-overlay')) closeModal();
   }
 
   document.addEventListener('keydown', e => {
