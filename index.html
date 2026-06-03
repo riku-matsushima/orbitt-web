@@ -3,359 +3,354 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ORBITT — Members</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<title>ORBITT :: Members Only</title>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --blue: #070e2b;
-    --blue-header: #070e2b;
-    --white-10: rgba(255,255,255,0.1);
-    --white-20: rgba(255,255,255,0.2);
-    --white-40: rgba(255,255,255,0.4);
-    --white-60: rgba(255,255,255,0.6);
-    --accent: #ff3366;
+    --bg: #000066;
+    --bg2: #000044;
+    --text: #ccccff;
+    --link: #ffff00;
+    --link2: #ff99ff;
+    --accent: #ff0066;
+    --border: #3333aa;
+    --white: #ffffff;
+    --mono: 'VT323', monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { min-height: 100vh; background: var(--blue); color: white; font-family: 'Noto Sans JP', sans-serif; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 13px;
+    min-height: 100vh;
+  }
 
+  /* ── LOGIN ── */
   #login-screen {
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 32px;
+    display: flex; align-items: center; justify-content: center; flex-direction: column;
+    gap: 24px;
+    background: #000033;
   }
-  .login-logo { font-family: 'Space Mono', monospace; font-size: 32px; letter-spacing: 6px; }
+  .login-logo {
+    font-family: var(--mono);
+    font-size: 48px;
+    color: var(--link);
+    text-shadow: 2px 2px #ff0066, 4px 4px #9900ff;
+    letter-spacing: 6px;
+  }
+  .login-sub { font-family: var(--mono); font-size: 16px; color: var(--link2); letter-spacing: 3px; }
   .login-box {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid var(--white-10);
-    border-radius: 16px;
-    padding: 32px;
-    width: 320px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
+    background: var(--bg2);
+    border: 2px solid var(--border);
+    padding: 24px;
+    width: 300px;
+    display: flex; flex-direction: column; gap: 12px;
   }
-  .login-box p { font-size: 13px; color: var(--white-60); text-align: center; }
+  .login-box p { font-size: 12px; color: var(--text); text-align: center; font-family: var(--mono); font-size: 16px; letter-spacing: 1px; }
   .login-box input {
     width: 100%;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid var(--white-20);
-    border-radius: 8px;
-    padding: 12px 16px;
-    color: white;
+    background: #000022;
+    border: 1px solid var(--border);
+    padding: 8px 10px;
+    color: var(--link);
     font-size: 14px;
-    font-family: 'Space Mono', monospace;
-    letter-spacing: 2px;
+    font-family: var(--mono);
+    font-size: 18px;
     outline: none;
   }
-  .login-box input:focus { border-color: var(--white-40); }
+  .login-box input:focus { border-color: var(--link); }
   .login-box button {
     width: 100%;
-    background: white;
-    color: var(--blue);
-    border: none;
-    border-radius: 8px;
-    padding: 12px;
+    background: var(--border);
+    color: var(--white);
+    border: 1px solid #6666cc;
+    padding: 8px;
     font-size: 14px;
-    font-weight: 500;
     cursor: pointer;
-    font-family: 'Space Mono', monospace;
-    letter-spacing: 1px;
+    font-family: var(--mono);
+    font-size: 20px;
+    letter-spacing: 2px;
   }
-  .login-box button:hover { background: #eee; }
-  .login-err { font-size: 12px; color: var(--accent); text-align: center; display: none; }
+  .login-box button:hover { background: #4444aa; }
+  .login-err { font-size: 13px; color: var(--accent); text-align: center; display: none; font-family: var(--mono); font-size: 16px; }
 
+  /* ── SITE ── */
   #site { display: none; }
 
-  header {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(13,27,75,0.95);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--white-10);
-    padding: 14px 32px;
+  /* header */
+  #top-bar {
+    background: #000022;
+    border-bottom: 2px solid var(--border);
+    padding: 6px 16px;
     display: flex; align-items: center; justify-content: space-between;
   }
-  .logo { font-family: 'Space Mono', monospace; font-size: 16px; letter-spacing: 4px; }
-  .member-badge {
-    font-size: 11px;
-    background: var(--white-10);
-    border: 1px solid var(--white-20);
-    padding: 4px 12px;
-    border-radius: 20px;
-    color: var(--white-60);
-    font-family: 'Space Mono', monospace;
+  .site-logo { font-family: var(--mono); font-size: 28px; color: var(--link); letter-spacing: 4px; }
+  .top-nav { display: flex; gap: 16px; }
+  .top-nav a {
+    font-family: var(--mono); font-size: 16px;
+    color: var(--link2); text-decoration: none;
+    border-bottom: 1px dotted var(--link2);
+  }
+  .top-nav a:hover { color: var(--link); }
+
+  /* marquee */
+  .marquee-bar {
+    background: #330033;
+    border-bottom: 1px solid #660066;
+    padding: 4px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-inner {
+    display: inline-block;
+    animation: marquee 20s linear infinite;
+    font-family: var(--mono); font-size: 14px; color: var(--link2);
+    letter-spacing: 2px;
+  }
+  @keyframes marquee { from { transform: translateX(100vw); } to { transform: translateX(-100%); } }
+
+  /* layout */
+  .layout { display: flex; gap: 0; min-height: calc(100vh - 80px); }
+  .left-col {
+    width: 180px; flex-shrink: 0;
+    background: #000033;
+    border-right: 2px solid var(--border);
+    padding: 16px 10px;
+  }
+  .main-col { flex: 1; min-width: 0; padding: 16px; }
+  .right-col {
+    width: 180px; flex-shrink: 0;
+    background: #000033;
+    border-left: 2px solid var(--border);
+    padding: 16px 10px;
   }
 
-  .banner {
-    width: 100%; height: 120px;
-    background: linear-gradient(135deg, #091540 0%, #152060 60%, #091a52 100%);
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
+  /* tabs */
+  .tabs { display: flex; gap: 0; margin-bottom: 0; border-bottom: 2px solid var(--border); }
+  .tab {
+    font-family: var(--mono); font-size: 16px;
+    padding: 6px 14px; cursor: pointer;
+    background: #000033; color: var(--text);
+    border: 1px solid var(--border); border-bottom: none;
+    margin-right: 2px;
   }
-  .banner::before {
-    content: 'ORBITT';
-    font-family: 'Space Mono', monospace;
-    font-size: 80px;
-    color: rgba(255,255,255,0.04);
-    letter-spacing: 20px;
-    position: absolute;
-  }
-  .banner-text { display: none; }
+  .tab.active { background: var(--bg); color: var(--link); }
+  .tab:hover { color: var(--link); }
 
-  .profile-row {
-    padding: 0 32px;
-    display: flex; align-items: flex-end; gap: 16px;
-    margin-top: 32px; margin-bottom: 32px;
-  }
-  .avatar {
-    width: 56px; height: 56px; border-radius: 50%;
-    background: #1e3a8a; border: 3px solid var(--blue);
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Mono', monospace; font-size: 18px;
-  }
-  .profile-name { font-size: 16px; font-weight: 500; padding-bottom: 4px; }
-  .profile-sub { font-size: 12px; color: var(--white-40); font-family: 'Space Mono', monospace; letter-spacing: 1px; }
+  /* panel */
+  .panel { display: none; padding: 14px 0; }
+  .panel.active { display: block; }
 
-  .layout { display: flex; gap: 24px; padding: 0 32px 60px; align-items: flex-start; }
-  .feed { flex: 1; min-width: 0; }
-  .sidebar { width: 220px; flex-shrink: 0; position: sticky; top: 80px; }
-
-  .filters { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-  .filter-btn {
-    font-size: 12px; padding: 6px 16px; border-radius: 20px;
-    border: 1px solid var(--white-20); background: transparent;
-    color: var(--white-60); cursor: pointer;
-    font-family: 'Space Mono', monospace; transition: all 0.2s;
-  }
-  .filter-btn:hover, .filter-btn.active { background: white; color: var(--blue); border-color: white; }
-
-  .post-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--white-10);
-    border-radius: 14px; padding: 20px; margin-bottom: 16px;
-    transition: border-color 0.2s;
-  }
-  .post-card:hover { border-color: var(--white-20); }
-  .post-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-  .post-av {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: #2200ff;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Mono', monospace; font-size: 12px; flex-shrink: 0;
-  }
-  .post-name { font-size: 13px; font-weight: 500; }
-  .post-date { font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; }
-  .post-type {
-    margin-left: auto; font-size: 10px;
-    font-family: 'Space Mono', monospace;
-    background: var(--white-10); color: var(--white-60);
-    padding: 3px 10px; border-radius: 20px; letter-spacing: 1px;
-  }
-  .post-title { font-size: 15px; font-weight: 500; margin-bottom: 8px; line-height: 1.4; }
-  .post-body { font-size: 13px; color: var(--white-60); line-height: 1.7; margin-bottom: 14px; white-space: pre-line; }
-  .video-link {
-    display: flex; align-items: center; gap: 10px;
-    background: rgba(0,0,0,0.2); border: 1px solid var(--white-10);
-    border-radius: 10px; padding: 12px 16px;
-    color: white; text-decoration: none; font-size: 13px; margin-bottom: 14px;
-    transition: background 0.2s;
-  }
-  .video-link:hover { background: rgba(0,0,0,0.35); }
-  .play-icon {
-    width: 32px; height: 32px; background: white; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .post-footer {
-    padding-top: 14px; border-top: 1px solid var(--white-10);
-    font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace;
-  }
-
-  .sb-card {
-    background: rgba(255,255,255,0.05); border: 1px solid var(--white-10);
-    border-radius: 12px; padding: 16px; margin-bottom: 14px;
-  }
-  .sb-label {
-    font-size: 10px; font-family: 'Space Mono', monospace;
-    letter-spacing: 2px; color: var(--white-40); margin-bottom: 12px; text-transform: uppercase;
-  }
-  .sb-plan { font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
-  .plan-dot { width: 8px; height: 8px; background: #44ff88; border-radius: 50%; }
-  .sb-stat { font-size: 28px; font-family: 'Space Mono', monospace; font-weight: 700; }
-  .sb-stat-sub { font-size: 11px; color: var(--white-40); margin-top: 4px; font-family: 'Space Mono', monospace; }
-  .notion-link {
-    font-size: 11px; color: var(--white-40); text-align: center;
-    display: block; margin-top: 8px; font-family: 'Space Mono', monospace;
-    text-decoration: none;
-  }
-  .notion-link:hover { color: white; }
-
-  .loading {
-    text-align: center; padding: 60px 20px;
-    color: var(--white-40); font-family: 'Space Mono', monospace;
-    font-size: 13px; letter-spacing: 2px;
-  }
-  .spinner {
-    width: 24px; height: 24px;
-    border: 2px solid var(--white-10); border-top-color: white;
-    border-radius: 50%; animation: spin 0.8s linear infinite;
-    margin: 0 auto 16px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-
-  /* Bulletin Board */
-  .bb-section {
-    padding: 0 32px 40px;
-  }
-  .bb-header {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px; letter-spacing: 3px;
-    color: var(--white-40); text-transform: uppercase;
+  /* section box */
+  .retro-box {
+    border: 1px solid var(--border);
     margin-bottom: 16px;
   }
-  .bb-compose {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--white-10);
-    border-radius: 14px; padding: 16px; margin-bottom: 20px;
-  }
-  .bb-compose textarea {
-    width: 100%;
-    background: rgba(255,255,255,0.06);
-    border: 1px solid var(--white-20);
-    border-radius: 10px; padding: 12px 14px;
-    color: white; font-size: 14px;
-    font-family: 'Noto Sans JP', sans-serif;
-    resize: none; outline: none;
-    line-height: 1.6;
-  }
-  .bb-compose textarea::placeholder { color: var(--white-40); }
-  .bb-compose textarea:focus { border-color: var(--white-40); }
-  .bb-compose-footer {
+  .retro-box-title {
+    background: var(--border);
+    color: var(--white);
+    font-family: var(--mono); font-size: 16px;
+    padding: 4px 10px; letter-spacing: 1px;
     display: flex; align-items: center; justify-content: space-between;
-    margin-top: 10px;
   }
-  .bb-name-input {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid var(--white-20);
-    border-radius: 8px; padding: 8px 12px;
-    color: white; font-size: 12px;
-    font-family: 'Space Mono', monospace;
-    outline: none; width: 160px;
-  }
-  .bb-name-input::placeholder { color: var(--white-40); }
-  .bb-name-input:focus { border-color: var(--white-40); }
-  .bb-submit {
-    background: white; color: var(--blue);
-    border: none; border-radius: 8px;
-    padding: 8px 20px; font-size: 12px;
-    font-family: 'Space Mono', monospace; font-weight: 700;
-    cursor: pointer; letter-spacing: 1px;
-    transition: background 0.2s;
-  }
-  .bb-submit:hover { background: #e0e0e0; }
-  .bb-msg {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--white-10);
-    border-radius: 12px; padding: 16px; margin-bottom: 12px;
-    transition: border-color 0.2s;
-  }
-  .bb-msg:hover { border-color: var(--white-20); }
-  .bb-msg-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
-  .bb-av {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: #1e3a8a;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-family: 'Space Mono', monospace; flex-shrink: 0;
-  }
-  .bb-msg-name { font-size: 13px; font-weight: 500; }
-  .bb-msg-time { font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; margin-left: auto; }
-  .bb-msg-body { font-size: 13px; color: var(--white-60); line-height: 1.7; white-space: pre-wrap; }
-  .bb-empty { text-align: center; padding: 32px; color: var(--white-40); font-size: 13px; font-family: 'Space Mono', monospace; }
+  .retro-box-body { padding: 12px; background: #000044; }
 
-  @media (max-width: 680px) {
-    .bb-section { padding: 0 16px 40px; }
-    .bb-compose-footer { flex-direction: column; gap: 10px; align-items: flex-start; }
-    .bb-name-input { width: 100%; }
-    .bb-submit { width: 100%; }
+  /* post */
+  .post-item { border-bottom: 1px dotted var(--border); padding: 10px 0; }
+  .post-item:last-child { border-bottom: none; }
+  .post-item-title { color: var(--link); font-family: var(--mono); font-size: 18px; margin-bottom: 4px; cursor: pointer; }
+  .post-item-title:hover { color: var(--link2); }
+  .post-item-meta { font-size: 11px; color: #8888cc; margin-bottom: 6px; font-family: var(--mono); font-size: 13px; }
+  .post-item-body { font-size: 12px; color: var(--text); line-height: 1.7; }
+  .post-item-link {
+    display: inline-block; margin-top: 6px;
+    color: var(--link2); font-family: var(--mono); font-size: 14px;
+    text-decoration: none; border-bottom: 1px dotted;
   }
+  .post-item-link:hover { color: var(--link); }
+  .new-icon { color: var(--accent); font-family: var(--mono); font-size: 14px; margin-left: 6px; }
 
-  @media (max-width: 680px) {
-    .layout { flex-direction: column; padding: 0 16px 40px; }
-    .sidebar { width: 100%; position: static; }
-    header { padding: 14px 16px; }
-    .profile-row { padding: 0 16px; }
+  /* filters */
+  .filter-row { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+  .filter-btn {
+    font-family: var(--mono); font-size: 14px;
+    padding: 2px 10px; cursor: pointer;
+    background: #000033; color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .filter-btn:hover, .filter-btn.active { background: var(--border); color: var(--white); }
+
+  /* BBS */
+  .bbs-post { border: 1px solid var(--border); margin-bottom: 10px; }
+  .bbs-post-header {
+    background: #001144; padding: 4px 10px;
+    display: flex; gap: 12px; align-items: center;
+    font-family: var(--mono); font-size: 14px;
+  }
+  .bbs-post-num { color: var(--accent); }
+  .bbs-post-name { color: var(--link); }
+  .bbs-post-date { color: #8888cc; font-size: 12px; }
+  .bbs-post-body { padding: 8px 12px; font-size: 12px; line-height: 1.7; color: var(--text); }
+  .bbs-form { border: 1px solid var(--border); padding: 12px; background: #000033; margin-bottom: 16px; }
+  .bbs-form-title { font-family: var(--mono); font-size: 16px; color: var(--link2); margin-bottom: 10px; }
+  .bbs-form table { width: 100%; }
+  .bbs-form td { padding: 4px 6px; font-size: 12px; vertical-align: top; }
+  .bbs-form td:first-child { color: #8888cc; width: 60px; font-family: var(--mono); font-size: 14px; white-space: nowrap; }
+  .bbs-form input, .bbs-form textarea {
+    width: 100%; background: #000022; border: 1px solid var(--border);
+    color: var(--text); padding: 4px 6px; font-size: 12px;
+    font-family: 'Noto Sans JP', sans-serif; outline: none;
+  }
+  .bbs-form textarea { height: 80px; resize: vertical; }
+  .bbs-form input:focus, .bbs-form textarea:focus { border-color: var(--link); }
+  .bbs-submit {
+    background: var(--border); color: white; border: 1px solid #6666cc;
+    padding: 4px 16px; cursor: pointer; font-family: var(--mono); font-size: 16px;
+    margin-top: 8px;
+  }
+  .bbs-submit:hover { background: #4444aa; }
+
+  /* sidebar */
+  .sb-section { margin-bottom: 20px; }
+  .sb-title {
+    font-family: var(--mono); font-size: 16px; color: var(--link);
+    border-bottom: 1px solid var(--border); margin-bottom: 8px; padding-bottom: 2px;
+    letter-spacing: 1px;
+  }
+  .sb-item { font-size: 11px; color: var(--text); padding: 3px 0; border-bottom: 1px dotted #222255; font-family: var(--mono); font-size: 13px; }
+  .sb-link { color: var(--link2); text-decoration: none; }
+  .sb-link:hover { color: var(--link); }
+
+  /* loading */
+  .loading { text-align: center; padding: 40px; color: #8888cc; font-family: var(--mono); font-size: 18px; letter-spacing: 2px; }
+
+  /* footer */
+  #footer {
+    background: #000022; border-top: 2px solid var(--border);
+    padding: 8px 16px; text-align: center;
+    font-family: var(--mono); font-size: 14px; color: #6666aa;
+  }
+  #footer a { color: var(--link2); text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .left-col, .right-col { display: none; }
+    .main-col { padding: 10px; }
   }
 </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-logo">ORBITT</div>
+  <div class="login-sub">:: MEMBERS ONLY ::</div>
   <div class="login-box">
-    <p>メンバー限定ページ</p>
-    <input type="password" id="pw-input" placeholder="パスワードを入力" />
-    <div class="login-err" id="login-err">パスワードが違います</div>
-    <button onclick="tryLogin()">入る</button>
+    <p>PASSWORD</p>
+    <input type="password" id="pw-input" placeholder="*********" />
+    <div class="login-err" id="login-err">★ パスワードが違います ★</div>
+    <button onclick="tryLogin()">[ ENTER ]</button>
   </div>
 </div>
 
+<!-- SITE -->
 <div id="site">
-  <div class="profile-row">
-    <div class="avatar">R</div>
-    <div>
-      <div class="profile-name">Riku Matsushima</div>
-      <div class="profile-sub">限定コンテンツ</div>
+  <div id="top-bar">
+    <div class="site-logo">★ ORBITT</div>
+    <div class="top-nav">
+      <a href="#" onclick="showTab('posts')">投稿</a>
+      <a href="#" onclick="showTab('bbs')">掲示板</a>
     </div>
+    <div style="font-family:var(--mono);font-size:13px;color:#8888cc">MEMBER</div>
+  </div>
+
+  <div class="marquee-bar">
+    <div class="marquee-inner">★ ORBITT EXCLUSIVE MEMBERS AREA ★ 限定コンテンツ配信中 ★ Riku Matsushima ★ ORBITT EXCLUSIVE MEMBERS AREA ★ 限定コンテンツ配信中 ★</div>
   </div>
 
   <div class="layout">
-    <div class="feed">
-      <div class="filters">
-        <button class="filter-btn active" onclick="filterPosts('all', this)">All</button>
-        <button class="filter-btn" onclick="filterPosts('動画', this)">動画</button>
-        <button class="filter-btn" onclick="filterPosts('テキスト', this)">テキスト</button>
-        <button class="filter-btn" onclick="filterPosts('写真', this)">写真</button>
+    <!-- LEFT -->
+    <div class="left-col">
+      <div class="sb-section">
+        <div class="sb-title">MENU</div>
+        <div class="sb-item"><a href="#" class="sb-link" onclick="showTab('posts')">▶ 投稿一覧</a></div>
+        <div class="sb-item"><a href="#" class="sb-link" onclick="showTab('bbs')">▶ 掲示板</a></div>
+        <div class="sb-item"><a href="https://notion.so" target="_blank" class="sb-link">▶ Notionで管理</a></div>
       </div>
-      <div id="posts-container">
-        <div class="loading"><div class="spinner"></div>LOADING...</div>
+      <div class="sb-section">
+        <div class="sb-title">INFO</div>
+        <div class="sb-item">Riku Matsushima</div>
+        <div class="sb-item">限定コンテンツ</div>
+        <div class="sb-item" id="sb-count">投稿数: —</div>
       </div>
     </div>
 
-    <div class="sidebar">
-      <div class="sb-card">
-        <div class="sb-label">プラン</div>
-        <div class="sb-plan"><div class="plan-dot"></div><span>Premium</span></div>
+    <!-- MAIN -->
+    <div class="main-col">
+      <div class="tabs">
+        <div class="tab active" id="tab-posts" onclick="showTab('posts')">投稿</div>
+        <div class="tab" id="tab-bbs" onclick="showTab('bbs')">掲示板</div>
       </div>
-      <div class="sb-card">
-        <div class="sb-label">投稿数</div>
-        <div class="sb-stat" id="post-count">—</div>
-        <div class="sb-stat-sub">件のコンテンツ</div>
-        <a href="https://notion.so" target="_blank" class="notion-link">▸ Notion で管理</a>
+
+      <!-- POSTS -->
+      <div class="panel active" id="panel-posts">
+        <div class="filter-row">
+          <button class="filter-btn active" onclick="filterPosts('all',this)">全て</button>
+          <button class="filter-btn" onclick="filterPosts('動画',this)">動画</button>
+          <button class="filter-btn" onclick="filterPosts('テキスト',this)">テキスト</button>
+          <button class="filter-btn" onclick="filterPosts('写真',this)">写真</button>
+        </div>
+        <div id="posts-container">
+          <div class="loading">Loading...</div>
+        </div>
+      </div>
+
+      <!-- BBS -->
+      <div class="panel" id="panel-bbs">
+        <div class="bbs-form">
+          <div class="bbs-form-title">[ 書き込む ]</div>
+          <table>
+            <tr>
+              <td>名前</td>
+              <td><input type="text" id="bbs-name" placeholder="名無しさん" /></td>
+            </tr>
+            <tr>
+              <td>本文</td>
+              <td><textarea id="bbs-body" placeholder="書き込み内容..."></textarea></td>
+            </tr>
+          </table>
+          <button class="bbs-submit" onclick="submitBBS()">書き込む</button>
+        </div>
+        <div id="bbs-container">
+          <div class="loading">Loading...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right-col">
+      <div class="sb-section">
+        <div class="sb-title">最新投稿</div>
+        <div id="recent-posts"></div>
+      </div>
+      <div class="sb-section">
+        <div class="sb-title">LINKS</div>
+        <div class="sb-item"><a href="https://youtube.com" target="_blank" class="sb-link">YouTube</a></div>
+        <div class="sb-item"><a href="https://instagram.com" target="_blank" class="sb-link">Instagram</a></div>
       </div>
     </div>
   </div>
 
-  <!-- 掲示板 -->
-  <div class="bb-section">
-    <div class="bb-header">掲示板 / BOARD</div>
-    <div class="bb-compose">
-      <textarea id="bb-text" rows="3" placeholder="メッセージを入力..."></textarea>
-      <div class="bb-compose-footer">
-        <input type="text" id="bb-name" class="bb-name-input" placeholder="名前（任意）" maxlength="20" />
-        <button class="bb-submit" onclick="postMessage()">投稿する</button>
-      </div>
-    </div>
-    <div id="bb-list"><div class="bb-empty">まだ投稿がありません</div></div>
+  <div id="footer">
+    <a href="#">ORBITT</a> :: Members Only :: &copy; Riku Matsushima
   </div>
-
 </div>
 
 <script>
-  const PASSWORD = 'orbitt2026'; // ← パスワードをここで変更
-
+  const PASSWORD = 'orbitt2026';
   let allPosts = [];
+  let bbsPosts = JSON.parse(localStorage.getItem('orbitt_bbs') || '[]');
 
   function tryLogin() {
     const val = document.getElementById('pw-input').value;
@@ -363,15 +358,19 @@
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('site').style.display = 'block';
       loadPosts();
-      renderBoard();
+      renderBBS();
     } else {
       document.getElementById('login-err').style.display = 'block';
     }
   }
+  document.getElementById('pw-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
 
-  document.getElementById('pw-input').addEventListener('keydown', e => {
-    if (e.key === 'Enter') tryLogin();
-  });
+  function showTab(tab) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    document.getElementById('panel-' + tab).classList.add('active');
+  }
 
   async function loadPosts() {
     try {
@@ -379,55 +378,49 @@
       if (!res.ok) throw new Error('API error');
       const data = await res.json();
       allPosts = data.results || [];
-      document.getElementById('post-count').textContent = allPosts.length;
+      document.getElementById('sb-count').textContent = '投稿数: ' + allPosts.length;
       renderPosts(allPosts);
+      renderRecent(allPosts.slice(0, 5));
     } catch (e) {
       document.getElementById('posts-container').innerHTML =
-        `<div class="loading">⚠ 読み込みエラー<br><br><small>${e.message}</small></div>`;
+        `<div class="loading">⚠ エラー: ${e.message}</div>`;
     }
   }
 
   function renderPosts(posts) {
     const container = document.getElementById('posts-container');
-    if (posts.length === 0) {
-      container.innerHTML = '<div class="loading">投稿がまだありません</div>';
-      return;
-    }
+    if (!posts.length) { container.innerHTML = '<div class="loading">投稿がまだありません</div>'; return; }
     const now = new Date();
-    container.innerHTML = posts.map(post => {
-      const props = post.properties;
-      const title = props.Name?.title?.[0]?.plain_text || props.Title?.title?.[0]?.plain_text || '(無題)';
-      const type = props.Type?.select?.name || props.種類?.select?.name || '';
-      const body = props.Text?.rich_text?.[0]?.plain_text || props.Body?.rich_text?.[0]?.plain_text || props.内容?.rich_text?.[0]?.plain_text || '';
-      const videoUrl = props.VideoURL?.url || props.URL?.url || '';
-      const dateStr = props.Date?.date?.start || props.日付?.date?.start || '';
+    container.innerHTML = posts.map((post, i) => {
+      const p = post.properties;
+      const title = p.Name?.title?.[0]?.plain_text || p.Title?.title?.[0]?.plain_text || '(無題)';
+      const type = p.Type?.select?.name || p.種類?.select?.name || '';
+      const body = p.Text?.rich_text?.[0]?.plain_text || p.Body?.rich_text?.[0]?.plain_text || '';
+      const url = p.VideoURL?.url || p.URL?.url || '';
+      const dateStr = p.Date?.date?.start || '';
       const postDate = dateStr ? new Date(dateStr) : new Date(post.created_time);
       const isNew = (now - postDate) / (1000*60*60*24) <= 3;
-      const dateLabel = postDate.toLocaleDateString('ja-JP', { year:'numeric', month:'2-digit', day:'2-digit' }).replace(/\//g,'.');
+      const dateLabel = postDate.toLocaleDateString('ja-JP').replace(/\//g, '.');
 
-      return `
-        <div class="post-card" data-type="${type}">
-          <div class="post-meta">
-            <div class="post-av">R</div>
-            <div>
-              <div class="post-name">Riku ${isNew ? '<span style="font-size:10px;color:#ff3366;font-family:Space Mono,monospace;margin-left:6px">NEW</span>' : ''}</div>
-              <div class="post-date">${dateLabel}</div>
-            </div>
-            ${type ? `<div class="post-type">${type}</div>` : ''}
-          </div>
-          <div class="post-title">${title}</div>
-          ${body ? `<div class="post-body">${body}</div>` : ''}
-          ${videoUrl ? `
-            <a href="${videoUrl}" target="_blank" class="video-link">
-              <div class="play-icon">
-                <svg width="12" height="14" viewBox="0 0 12 14" fill="none">
-                  <path d="M1 1L11 7L1 13V1Z" fill="#0a00cc"/>
-                </svg>
-              </div>
-              <span>動画を見る</span>
-            </a>` : ''}
-          <div class="post-footer">${dateLabel}</div>
-        </div>`;
+      return `<div class="retro-box">
+        <div class="retro-box-title">
+          <span>No.${String(i+1).padStart(3,'0')} ${title}${isNew ? '<span class="new-icon">[NEW]</span>' : ''}</span>
+          ${type ? `<span style="font-size:12px;opacity:0.7">[${type}]</span>` : ''}
+        </div>
+        <div class="retro-box-body">
+          <div class="post-item-meta">${dateLabel} / Riku Matsushima</div>
+          ${body ? `<div class="post-item-body">${body}</div>` : ''}
+          ${url ? `<a href="${url}" target="_blank" class="post-item-link">▶ 動画を見る →</a>` : ''}
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderRecent(posts) {
+    const el = document.getElementById('recent-posts');
+    el.innerHTML = posts.map(post => {
+      const title = post.properties.Name?.title?.[0]?.plain_text || post.properties.Title?.title?.[0]?.plain_text || '(無題)';
+      return `<div class="sb-item"><span class="sb-link">▷ ${title}</span></div>`;
     }).join('');
   }
 
@@ -441,74 +434,33 @@
     renderPosts(filtered);
   }
 
-  // 掲示板
-  const BB_KEY = 'orbitt_bb_messages';
-
-  function bbLoad() {
-    try { return JSON.parse(localStorage.getItem(BB_KEY)) || []; } catch { return []; }
-  }
-
-  function bbSave(msgs) {
-    localStorage.setItem(BB_KEY, JSON.stringify(msgs));
-  }
-
-  function bbInitials(name) {
-    if (!name) return '?';
-    return name.trim().charAt(0).toUpperCase();
-  }
-
-  function bbTimeLabel(ts) {
-    const d = new Date(ts);
-    const now = new Date();
-    const diff = (now - d) / 1000;
-    if (diff < 60) return 'たった今';
-    if (diff < 3600) return Math.floor(diff / 60) + '分前';
-    if (diff < 86400) return Math.floor(diff / 3600) + '時間前';
-    return d.toLocaleDateString('ja-JP', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' }).replace(/\//g,'.');
-  }
-
-  function renderBoard() {
-    const msgs = bbLoad();
-    const list = document.getElementById('bb-list');
-    if (!list) return;
-    if (msgs.length === 0) {
-      list.innerHTML = '<div class="bb-empty">まだ投稿がありません</div>';
-      return;
-    }
-    list.innerHTML = [...msgs].reverse().map(m => `
-      <div class="bb-msg">
-        <div class="bb-msg-header">
-          <div class="bb-av">${bbInitials(m.name)}</div>
-          <div class="bb-msg-name">${m.name ? escHtml(m.name) : '匿名'}</div>
-          <div class="bb-msg-time">${bbTimeLabel(m.ts)}</div>
+  // BBS
+  function renderBBS() {
+    const el = document.getElementById('bbs-container');
+    if (!bbsPosts.length) { el.innerHTML = '<div class="loading">書き込みがまだありません</div>'; return; }
+    el.innerHTML = [...bbsPosts].reverse().map((p, i) => `
+      <div class="bbs-post">
+        <div class="bbs-post-header">
+          <span class="bbs-post-num">No.${bbsPosts.length - i}</span>
+          <span class="bbs-post-name">${p.name || '名無しさん'}</span>
+          <span class="bbs-post-date">${p.date}</span>
         </div>
-        <div class="bb-msg-body">${escHtml(m.text)}</div>
+        <div class="bbs-post-body">${p.body}</div>
       </div>`).join('');
   }
 
-  function escHtml(str) {
-    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  function submitBBS() {
+    const name = document.getElementById('bbs-name').value.trim() || '名無しさん';
+    const body = document.getElementById('bbs-body').value.trim();
+    if (!body) return;
+    const now = new Date();
+    const date = now.toLocaleDateString('ja-JP').replace(/\//g,'.') + ' ' + now.toLocaleTimeString('ja-JP', {hour:'2-digit',minute:'2-digit'});
+    bbsPosts.push({ name, body, date });
+    localStorage.setItem('orbitt_bbs', JSON.stringify(bbsPosts));
+    document.getElementById('bbs-name').value = '';
+    document.getElementById('bbs-body').value = '';
+    renderBBS();
   }
-
-  function postMessage() {
-    const text = document.getElementById('bb-text').value.trim();
-    const name = document.getElementById('bb-name').value.trim();
-    if (!text) return;
-    const msgs = bbLoad();
-    msgs.push({ text, name: name || '', ts: Date.now() });
-    bbSave(msgs);
-    document.getElementById('bb-text').value = '';
-    renderBoard();
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const ta = document.getElementById('bb-text');
-    if (ta) {
-      ta.addEventListener('keydown', e => {
-        if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) postMessage();
-      });
-    }
-  });
 </script>
 </body>
 </html>
