@@ -7,7 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --blue: #0a00cc;
+    --blue: #070e2b;
+    --blue-header: #070e2b;
     --white-10: rgba(255,255,255,0.1);
     --white-20: rgba(255,255,255,0.2);
     --white-40: rgba(255,255,255,0.4);
@@ -70,7 +71,7 @@
 
   header {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(10,0,204,0.92);
+    background: rgba(13,27,75,0.95);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--white-10);
     padding: 14px 32px;
@@ -88,8 +89,8 @@
   }
 
   .banner {
-    width: 100%; height: 200px;
-    background: linear-gradient(135deg, #0500aa 0%, #1a00ee 60%, #2200aa 100%);
+    width: 100%; height: 120px;
+    background: linear-gradient(135deg, #091540 0%, #152060 60%, #091a52 100%);
     display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden;
   }
@@ -101,20 +102,16 @@
     letter-spacing: 20px;
     position: absolute;
   }
-  .banner-text {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; letter-spacing: 4px;
-    color: var(--white-40); position: relative;
-  }
+  .banner-text { display: none; }
 
   .profile-row {
     padding: 0 32px;
     display: flex; align-items: flex-end; gap: 16px;
-    margin-top: -28px; margin-bottom: 32px;
+    margin-top: 32px; margin-bottom: 32px;
   }
   .avatar {
     width: 56px; height: 56px; border-radius: 50%;
-    background: #2200ff; border: 3px solid var(--blue);
+    background: #1e3a8a; border: 3px solid var(--blue);
     display: flex; align-items: center; justify-content: center;
     font-family: 'Space Mono', monospace; font-size: 18px;
   }
@@ -207,6 +204,83 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+
+  /* Bulletin Board */
+  .bb-section {
+    padding: 0 32px 40px;
+  }
+  .bb-header {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 3px;
+    color: var(--white-40); text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .bb-compose {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--white-10);
+    border-radius: 14px; padding: 16px; margin-bottom: 20px;
+  }
+  .bb-compose textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--white-20);
+    border-radius: 10px; padding: 12px 14px;
+    color: white; font-size: 14px;
+    font-family: 'Noto Sans JP', sans-serif;
+    resize: none; outline: none;
+    line-height: 1.6;
+  }
+  .bb-compose textarea::placeholder { color: var(--white-40); }
+  .bb-compose textarea:focus { border-color: var(--white-40); }
+  .bb-compose-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 10px;
+  }
+  .bb-name-input {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--white-20);
+    border-radius: 8px; padding: 8px 12px;
+    color: white; font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    outline: none; width: 160px;
+  }
+  .bb-name-input::placeholder { color: var(--white-40); }
+  .bb-name-input:focus { border-color: var(--white-40); }
+  .bb-submit {
+    background: white; color: var(--blue);
+    border: none; border-radius: 8px;
+    padding: 8px 20px; font-size: 12px;
+    font-family: 'Space Mono', monospace; font-weight: 700;
+    cursor: pointer; letter-spacing: 1px;
+    transition: background 0.2s;
+  }
+  .bb-submit:hover { background: #e0e0e0; }
+  .bb-msg {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--white-10);
+    border-radius: 12px; padding: 16px; margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .bb-msg:hover { border-color: var(--white-20); }
+  .bb-msg-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+  .bb-av {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: #1e3a8a;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-family: 'Space Mono', monospace; flex-shrink: 0;
+  }
+  .bb-msg-name { font-size: 13px; font-weight: 500; }
+  .bb-msg-time { font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; margin-left: auto; }
+  .bb-msg-body { font-size: 13px; color: var(--white-60); line-height: 1.7; white-space: pre-wrap; }
+  .bb-empty { text-align: center; padding: 32px; color: var(--white-40); font-size: 13px; font-family: 'Space Mono', monospace; }
+
+  @media (max-width: 680px) {
+    .bb-section { padding: 0 16px 40px; }
+    .bb-compose-footer { flex-direction: column; gap: 10px; align-items: flex-start; }
+    .bb-name-input { width: 100%; }
+    .bb-submit { width: 100%; }
+  }
+
   @media (max-width: 680px) {
     .layout { flex-direction: column; padding: 0 16px 40px; }
     .sidebar { width: 100%; position: static; }
@@ -228,15 +302,6 @@
 </div>
 
 <div id="site">
-  <header>
-    <div class="logo">ORBITT</div>
-    <div class="member-badge">MEMBER</div>
-  </header>
-
-  <div class="banner">
-    <div class="banner-text">EXCLUSIVE MEMBERS CONTENT</div>
-  </div>
-
   <div class="profile-row">
     <div class="avatar">R</div>
     <div>
@@ -271,6 +336,20 @@
       </div>
     </div>
   </div>
+
+  <!-- 掲示板 -->
+  <div class="bb-section">
+    <div class="bb-header">掲示板 / BOARD</div>
+    <div class="bb-compose">
+      <textarea id="bb-text" rows="3" placeholder="メッセージを入力..."></textarea>
+      <div class="bb-compose-footer">
+        <input type="text" id="bb-name" class="bb-name-input" placeholder="名前（任意）" maxlength="20" />
+        <button class="bb-submit" onclick="postMessage()">投稿する</button>
+      </div>
+    </div>
+    <div id="bb-list"><div class="bb-empty">まだ投稿がありません</div></div>
+  </div>
+
 </div>
 
 <script>
@@ -284,6 +363,7 @@
       document.getElementById('login-screen').style.display = 'none';
       document.getElementById('site').style.display = 'block';
       loadPosts();
+      renderBoard();
     } else {
       document.getElementById('login-err').style.display = 'block';
     }
@@ -360,6 +440,75 @@
     });
     renderPosts(filtered);
   }
+
+  // 掲示板
+  const BB_KEY = 'orbitt_bb_messages';
+
+  function bbLoad() {
+    try { return JSON.parse(localStorage.getItem(BB_KEY)) || []; } catch { return []; }
+  }
+
+  function bbSave(msgs) {
+    localStorage.setItem(BB_KEY, JSON.stringify(msgs));
+  }
+
+  function bbInitials(name) {
+    if (!name) return '?';
+    return name.trim().charAt(0).toUpperCase();
+  }
+
+  function bbTimeLabel(ts) {
+    const d = new Date(ts);
+    const now = new Date();
+    const diff = (now - d) / 1000;
+    if (diff < 60) return 'たった今';
+    if (diff < 3600) return Math.floor(diff / 60) + '分前';
+    if (diff < 86400) return Math.floor(diff / 3600) + '時間前';
+    return d.toLocaleDateString('ja-JP', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' }).replace(/\//g,'.');
+  }
+
+  function renderBoard() {
+    const msgs = bbLoad();
+    const list = document.getElementById('bb-list');
+    if (!list) return;
+    if (msgs.length === 0) {
+      list.innerHTML = '<div class="bb-empty">まだ投稿がありません</div>';
+      return;
+    }
+    list.innerHTML = [...msgs].reverse().map(m => `
+      <div class="bb-msg">
+        <div class="bb-msg-header">
+          <div class="bb-av">${bbInitials(m.name)}</div>
+          <div class="bb-msg-name">${m.name ? escHtml(m.name) : '匿名'}</div>
+          <div class="bb-msg-time">${bbTimeLabel(m.ts)}</div>
+        </div>
+        <div class="bb-msg-body">${escHtml(m.text)}</div>
+      </div>`).join('');
+  }
+
+  function escHtml(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function postMessage() {
+    const text = document.getElementById('bb-text').value.trim();
+    const name = document.getElementById('bb-name').value.trim();
+    if (!text) return;
+    const msgs = bbLoad();
+    msgs.push({ text, name: name || '', ts: Date.now() });
+    bbSave(msgs);
+    document.getElementById('bb-text').value = '';
+    renderBoard();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const ta = document.getElementById('bb-text');
+    if (ta) {
+      ta.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) postMessage();
+      });
+    }
+  });
 </script>
 </body>
 </html>
