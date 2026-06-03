@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --blue: #0a00cc;
+    --blue: #020080;
     --white-10: rgba(255,255,255,0.1);
     --white-20: rgba(255,255,255,0.2);
     --white-40: rgba(255,255,255,0.4);
@@ -88,29 +88,29 @@
   }
 
   .banner {
-    width: 100%; height: 200px;
-    background: linear-gradient(135deg, #0500aa 0%, #1a00ee 60%, #2200aa 100%);
+    width: 100%; height: 56px;
+    background: linear-gradient(135deg, #010060 0%, #0a00aa 60%, #010060 100%);
     display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden;
   }
   .banner::before {
     content: 'ORBITT';
     font-family: 'Space Mono', monospace;
-    font-size: 80px;
+    font-size: 40px;
     color: rgba(255,255,255,0.04);
-    letter-spacing: 20px;
+    letter-spacing: 12px;
     position: absolute;
   }
   .banner-text {
     font-family: 'Space Mono', monospace;
-    font-size: 11px; letter-spacing: 4px;
+    font-size: 10px; letter-spacing: 4px;
     color: var(--white-40); position: relative;
   }
 
   .profile-row {
     padding: 0 32px;
-    display: flex; align-items: flex-end; gap: 16px;
-    margin-top: -28px; margin-bottom: 32px;
+    display: flex; align-items: center; gap: 16px;
+    margin-top: 16px; margin-bottom: 24px;
   }
   .avatar {
     width: 56px; height: 56px; border-radius: 50%;
@@ -207,11 +207,72 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* ── 掲示板 ────────────────── */
+  .board-section {
+    padding: 0 32px 60px;
+  }
+  .board-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 3px;
+    color: var(--white-40); text-transform: uppercase;
+    margin-bottom: 16px; padding-bottom: 12px;
+    border-bottom: 1px solid var(--white-10);
+  }
+  .board-form {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--white-10);
+    border-radius: 14px; padding: 20px; margin-bottom: 20px;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .board-form input, .board-form textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid var(--white-20);
+    border-radius: 8px; padding: 10px 14px;
+    color: white; font-size: 13px;
+    font-family: 'Noto Sans JP', sans-serif;
+    outline: none; resize: vertical;
+  }
+  .board-form input::placeholder, .board-form textarea::placeholder { color: var(--white-40); }
+  .board-form input:focus, .board-form textarea:focus { border-color: var(--white-40); }
+  .board-form textarea { min-height: 80px; }
+  .board-submit {
+    align-self: flex-end;
+    background: white; color: var(--blue);
+    border: none; border-radius: 8px;
+    padding: 9px 22px; font-size: 13px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700; cursor: pointer; letter-spacing: 1px;
+    transition: background 0.2s;
+  }
+  .board-submit:hover { background: #ddd; }
+  .board-post {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--white-10);
+    border-radius: 12px; padding: 16px; margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+  .board-post:hover { border-color: var(--white-20); }
+  .board-post-meta {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
+  }
+  .board-av {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Space Mono', monospace; font-size: 11px; flex-shrink: 0;
+  }
+  .board-poster { font-size: 13px; font-weight: 500; }
+  .board-ts { font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; margin-left: auto; }
+  .board-body { font-size: 13px; color: var(--white-60); line-height: 1.7; white-space: pre-line; }
+  .board-empty { font-size: 12px; color: var(--white-40); font-family: 'Space Mono', monospace; padding: 20px 0; }
+
   @media (max-width: 680px) {
     .layout { flex-direction: column; padding: 0 16px 40px; }
     .sidebar { width: 100%; position: static; }
     header { padding: 14px 16px; }
     .profile-row { padding: 0 16px; }
+    .board-section { padding: 0 16px 40px; }
   }
 </style>
 </head>
@@ -271,6 +332,17 @@
       </div>
     </div>
   </div>
+
+  <div class="board-section">
+    <div class="board-title">📌 掲示板 — みんなの声</div>
+    <div class="board-form">
+      <input type="text" id="board-name" placeholder="名前（任意）" maxlength="30" />
+      <textarea id="board-msg" placeholder="メッセージを書く..." maxlength="400"></textarea>
+      <button class="board-submit" onclick="submitBoard()">投稿する</button>
+    </div>
+    <div id="board-posts"></div>
+  </div>
+
 </div>
 
 <script>
@@ -360,6 +432,60 @@
     });
     renderPosts(filtered);
   }
+
+  // ── 掲示板 ──────────────────────────────────────
+  const BOARD_KEY = 'orbitt_board_v1';
+
+  function loadBoard() {
+    try {
+      return JSON.parse(localStorage.getItem(BOARD_KEY) || '[]');
+    } catch { return []; }
+  }
+  function saveBoard(posts) {
+    localStorage.setItem(BOARD_KEY, JSON.stringify(posts));
+  }
+
+  function renderBoard() {
+    const posts = loadBoard();
+    const el = document.getElementById('board-posts');
+    if (!posts.length) {
+      el.innerHTML = '<div class="board-empty">まだ投稿がありません。最初に書いてみよう！</div>';
+      return;
+    }
+    el.innerHTML = posts.slice().reverse().map(p => {
+      const initials = (p.name || '?').slice(0, 2).toUpperCase();
+      return `
+        <div class="board-post">
+          <div class="board-post-meta">
+            <div class="board-av">${initials}</div>
+            <div class="board-poster">${escHtml(p.name || '匿名')}</div>
+            <div class="board-ts">${p.ts}</div>
+          </div>
+          <div class="board-body">${escHtml(p.msg)}</div>
+        </div>`;
+    }).join('');
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function submitBoard() {
+    const name = document.getElementById('board-name').value.trim() || '匿名';
+    const msg  = document.getElementById('board-msg').value.trim();
+    if (!msg) return;
+    const posts = loadBoard();
+    const now = new Date();
+    const ts = now.toLocaleDateString('ja-JP', {month:'2-digit', day:'2-digit'}).replace('/','.') +
+               ' ' + now.toLocaleTimeString('ja-JP', {hour:'2-digit', minute:'2-digit'});
+    posts.push({ name, msg, ts });
+    saveBoard(posts);
+    document.getElementById('board-msg').value = '';
+    renderBoard();
+  }
+
+  // ページ読み込み時に掲示板表示（ログイン前でも初期化だけ）
+  renderBoard();
 </script>
 </body>
 </html>
