@@ -7,303 +7,111 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
---blue: #020080;
---white-10: rgba(255,255,255,0.1);
---white-20: rgba(255,255,255,0.2);
---white-40: rgba(255,255,255,0.4);
---white-60: rgba(255,255,255,0.6);
---accent: #ff3366;
+  --blue: #020080;
+  --white-10: rgba(255,255,255,0.1);
+  --white-20: rgba(255,255,255,0.2);
+  --white-40: rgba(255,255,255,0.4);
+  --white-60: rgba(255,255,255,0.6);
+  --accent: #ff3366;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { min-height: 100vh; background: var(--blue); color: white; font-family: 'Noto Sans JP', sans-serif; }
-#login-screen {
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction: column;
-gap: 32px;
-}
+
+/* ── ログイン ── */
+#login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 32px; }
 .login-logo { font-family: 'Space Mono', monospace; font-size: 32px; letter-spacing: 6px; }
-.login-box {
-background: rgba(255,255,255,0.06);
-border: 1px solid var(--white-10);
-border-radius: 16px;
-padding: 32px;
-width: 320px;
-display: flex;
-flex-direction: column;
-gap: 16px;
-}
+.login-box { background: rgba(255,255,255,0.06); border: 1px solid var(--white-10); border-radius: 16px; padding: 32px; width: 320px; display: flex; flex-direction: column; gap: 16px; }
 .login-box p { font-size: 13px; color: var(--white-60); text-align: center; }
-.login-box input {
-width: 100%;
-background: rgba(255,255,255,0.08);
-border: 1px solid var(--white-20);
-border-radius: 8px;
-padding: 12px 16px;
-color: white;
-font-size: 14px;
-font-family: 'Space Mono', monospace;
-letter-spacing: 2px;
-outline: none;
-}
+.login-box input { width: 100%; background: rgba(255,255,255,0.08); border: 1px solid var(--white-20); border-radius: 8px; padding: 12px 16px; color: white; font-size: 14px; font-family: 'Space Mono', monospace; letter-spacing: 2px; outline: none; }
 .login-box input:focus { border-color: var(--white-40); }
-.login-box button {
-width: 100%;
-background: white;
-color: var(--blue);
-border: none;
-border-radius: 8px;
-padding: 12px;
-font-size: 14px;
-font-weight: 500;
-cursor: pointer;
-font-family: 'Space Mono', monospace;
-letter-spacing: 1px;
-}
+.login-box button { width: 100%; background: white; color: var(--blue); border: none; border-radius: 8px; padding: 12px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'Space Mono', monospace; letter-spacing: 1px; }
 .login-box button:hover { background: #eee; }
 .login-err { font-size: 12px; color: var(--accent); text-align: center; display: none; }
+
 #site { display: none; }
-.inner {
-max-width: 960px;
-margin: 0 auto;
-width: 100%;
-}
-header {
-position: sticky; top: 0; z-index: 100;
-background: rgba(2,0,128,0.92);
-backdrop-filter: blur(12px);
-border-bottom: 1px solid var(--white-10);
-padding: 14px 32px;
-}
-header .inner {
-display: flex; align-items: center; justify-content: space-between;
-}
+.inner { max-width: 960px; margin: 0 auto; width: 100%; }
+
+/* ── ヘッダー ── */
+header { position: sticky; top: 0; z-index: 100; background: rgba(2,0,128,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--white-10); padding: 14px 32px; }
+header .inner { display: flex; align-items: center; justify-content: space-between; }
 .logo { font-family: 'Space Mono', monospace; font-size: 16px; letter-spacing: 4px; }
-.member-badge {
-font-size: 11px;
-background: var(--white-10);
-border: 1px solid var(--white-20);
-padding: 4px 12px;
-border-radius: 20px;
-color: var(--white-60);
-font-family: 'Space Mono', monospace;
-}
-.banner {
-width: 100%; height: 56px;
-background: linear-gradient(135deg, #010060 0%, #0a00aa 60%, #010060 100%);
-display: flex; align-items: center; justify-content: center;
-position: relative; overflow: hidden;
-}
-.banner::before {
-content: 'ORBITT';
-font-family: 'Space Mono', monospace;
-font-size: 40px;
-color: rgba(255,255,255,0.04);
-letter-spacing: 12px;
-position: absolute;
-}
-.banner-text {
-font-family: 'Space Mono', monospace;
-font-size: 10px; letter-spacing: 4px;
-color: var(--white-40); position: relative;
-}
-.profile-row {
-padding: 0 32px;
-display: flex; align-items: center; gap: 16px;
-margin-top: 16px; margin-bottom: 24px;
-max-width: 960px;
-margin-left: auto; margin-right: auto;
-}
-.avatar {
-width: 56px; height: 56px; border-radius: 50%;
-background: #2200ff; border: 3px solid var(--blue);
-display: flex; align-items: center; justify-content: center;
-font-family: 'Space Mono', monospace; font-size: 18px;
-}
+.member-badge { font-size: 11px; background: var(--white-10); border: 1px solid var(--white-20); padding: 4px 12px; border-radius: 20px; color: var(--white-60); font-family: 'Space Mono', monospace; }
+
+/* ── バナー ── */
+.banner { width: 100%; height: 56px; background: linear-gradient(135deg, #010060 0%, #0a00aa 60%, #010060 100%); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+.banner::before { content: 'ORBITT'; font-family: 'Space Mono', monospace; font-size: 40px; color: rgba(255,255,255,0.04); letter-spacing: 12px; position: absolute; }
+.banner-text { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 4px; color: var(--white-40); position: relative; }
+
+/* ── プロフィール ── */
+.profile-row { padding: 0 32px; display: flex; align-items: center; gap: 16px; margin-top: 16px; margin-bottom: 24px; max-width: 960px; margin-left: auto; margin-right: auto; }
+.avatar { width: 56px; height: 56px; border-radius: 50%; background: #2200ff; border: 3px solid var(--blue); display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 18px; }
 .profile-name { font-size: 16px; font-weight: 500; padding-bottom: 4px; }
 .profile-sub { font-size: 12px; color: var(--white-40); font-family: 'Space Mono', monospace; letter-spacing: 1px; }
+
+/* ── レイアウト ── */
 .layout { display: flex; gap: 24px; padding: 0 32px 60px; align-items: flex-start; max-width: 960px; margin: 0 auto; }
 .feed { flex: 1; min-width: 0; }
 .sidebar { width: 220px; flex-shrink: 0; position: sticky; top: 80px; }
+
+/* ── フィルター ── */
 .filters { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
-.filter-btn {
-font-size: 12px; padding: 6px 16px; border-radius: 20px;
-border: 1px solid var(--white-20); background: transparent;
-color: var(--white-60); cursor: pointer;
-font-family: 'Space Mono', monospace; transition: all 0.2s;
-}
+.filter-btn { font-size: 12px; padding: 6px 16px; border-radius: 20px; border: 1px solid var(--white-20); background: transparent; color: var(--white-60); cursor: pointer; font-family: 'Space Mono', monospace; transition: all 0.2s; }
 .filter-btn:hover, .filter-btn.active { background: white; color: var(--blue); border-color: white; }
-.post-card {
-background: rgba(255,255,255,0.05);
-border: 1px solid var(--white-10);
-border-radius: 14px; padding: 20px; margin-bottom: 16px;
-transition: border-color 0.2s, background 0.2s, transform 0.15s;
-cursor: pointer;
-user-select: none;
-}
-.post-card:hover {
-border-color: var(--white-40);
-background: rgba(255,255,255,0.08);
-transform: translateY(-2px);
-}
+
+/* ── 投稿カード ── */
+.post-card { background: rgba(255,255,255,0.05); border: 1px solid var(--white-10); border-radius: 14px; padding: 20px; margin-bottom: 16px; transition: border-color 0.2s, background 0.2s, transform 0.15s; cursor: pointer; user-select: none; }
+.post-card:hover { border-color: var(--white-40); background: rgba(255,255,255,0.08); transform: translateY(-2px); }
 .post-card:active { transform: translateY(0); }
 .post-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-.post-av {
-width: 32px; height: 32px; border-radius: 50%;
-background: #2200ff;
-display: flex; align-items: center; justify-content: center;
-font-family: 'Space Mono', monospace; font-size: 12px; flex-shrink: 0;
-}
+.post-av { width: 32px; height: 32px; border-radius: 50%; background: #2200ff; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 12px; flex-shrink: 0; }
 .post-name { font-size: 13px; font-weight: 500; }
 .post-date { font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; }
-.post-type {
-margin-left: auto; font-size: 10px;
-font-family: 'Space Mono', monospace;
-background: var(--white-10); color: var(--white-60);
-padding: 3px 10px; border-radius: 20px; letter-spacing: 1px;
-}
+.post-type { margin-left: auto; font-size: 10px; font-family: 'Space Mono', monospace; background: var(--white-10); color: var(--white-60); padding: 3px 10px; border-radius: 20px; letter-spacing: 1px; }
 .post-title { font-size: 15px; font-weight: 500; margin-bottom: 8px; line-height: 1.4; }
-.post-preview {
-font-size: 13px; color: var(--white-40); line-height: 1.6;
-margin-bottom: 12px;
-display: -webkit-box;
--webkit-line-clamp: 2;
--webkit-box-orient: vertical;
-overflow: hidden;
-}
-.video-badge {
-display: inline-flex; align-items: center; gap: 6px;
-font-size: 11px; font-family: 'Space Mono', monospace;
-color: var(--white-60);
-background: rgba(255,255,255,0.08);
-border: 1px solid var(--white-20);
-border-radius: 20px; padding: 4px 12px;
-margin-bottom: 12px;
-}
-.play-dot {
-width: 6px; height: 6px; background: #ff3366; border-radius: 50%;
-}
-.post-footer {
-display: flex; align-items: center; justify-content: space-between;
-padding-top: 12px; border-top: 1px solid var(--white-10);
-font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace;
-}
-.read-more {
-font-size: 11px; color: var(--white-60);
-font-family: 'Space Mono', monospace; letter-spacing: 1px;
-}
-.sb-card {
-background: rgba(255,255,255,0.05); border: 1px solid var(--white-10);
-border-radius: 12px; padding: 16px; margin-bottom: 14px;
-}
-.sb-label {
-font-size: 10px; font-family: 'Space Mono', monospace;
-letter-spacing: 2px; color: var(--white-40); margin-bottom: 12px; text-transform: uppercase;
-}
+.post-preview { font-size: 13px; color: var(--white-40); line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.video-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-family: 'Space Mono', monospace; color: var(--white-60); background: rgba(255,255,255,0.08); border: 1px solid var(--white-20); border-radius: 20px; padding: 4px 12px; margin-bottom: 12px; }
+.play-dot { width: 6px; height: 6px; background: #ff3366; border-radius: 50%; }
+.post-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--white-10); font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; }
+.comment-count-badge { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; }
+.read-more { font-size: 11px; color: var(--white-60); font-family: 'Space Mono', monospace; letter-spacing: 1px; }
+
+/* ── サイドバー ── */
+.sb-card { background: rgba(255,255,255,0.05); border: 1px solid var(--white-10); border-radius: 12px; padding: 16px; margin-bottom: 14px; }
+.sb-label { font-size: 10px; font-family: 'Space Mono', monospace; letter-spacing: 2px; color: var(--white-40); margin-bottom: 12px; text-transform: uppercase; }
 .sb-plan { font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 8px; }
 .plan-dot { width: 8px; height: 8px; background: #44ff88; border-radius: 50%; }
 .sb-stat { font-size: 28px; font-family: 'Space Mono', monospace; font-weight: 700; }
 .sb-stat-sub { font-size: 11px; color: var(--white-40); margin-top: 4px; font-family: 'Space Mono', monospace; }
-.notion-link {
-font-size: 11px; color: var(--white-40); text-align: center;
-display: block; margin-top: 8px; font-family: 'Space Mono', monospace;
-text-decoration: none;
-}
+.notion-link { font-size: 11px; color: var(--white-40); text-align: center; display: block; margin-top: 8px; font-family: 'Space Mono', monospace; text-decoration: none; }
 .notion-link:hover { color: white; }
-.loading {
-text-align: center; padding: 60px 20px;
-color: var(--white-40); font-family: 'Space Mono', monospace;
-font-size: 13px; letter-spacing: 2px;
-}
-.spinner {
-width: 24px; height: 24px;
-border: 2px solid var(--white-10); border-top-color: white;
-border-radius: 50%; animation: spin 0.8s linear infinite;
-margin: 0 auto 16px;
-}
+
+/* ── ローディング ── */
+.loading { text-align: center; padding: 60px 20px; color: var(--white-40); font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 2px; }
+.spinner { width: 24px; height: 24px; border: 2px solid var(--white-10); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 16px; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.modal-overlay {
-position: fixed; inset: 0; z-index: 200;
-background: var(--blue);
-display: flex; flex-direction: column;
-opacity: 0; pointer-events: none;
-transition: opacity 0.3s;
-overflow-y: auto;
-}
-.modal-overlay.open {
-opacity: 1; pointer-events: all;
-}
-.modal-topbar {
-position: sticky; top: 0; z-index: 10;
-background: rgba(2,0,128,0.95);
-backdrop-filter: blur(12px);
-border-bottom: 1px solid var(--white-10);
-padding: 12px 24px;
-display: flex; align-items: center; gap: 16px;
-flex-shrink: 0;
-}
-.modal-back-btn {
-display: flex; align-items: center; gap: 8px;
-background: var(--white-10); border: 1px solid var(--white-20);
-border-radius: 8px; padding: 6px 14px;
-color: var(--white-60); font-size: 12px; cursor: pointer;
-font-family: 'Space Mono', monospace; letter-spacing: 1px;
-transition: all 0.2s; text-decoration: none;
-}
+
+/* ── モーダル ── */
+.modal-overlay { position: fixed; inset: 0; z-index: 200; background: var(--blue); display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity 0.3s; overflow-y: auto; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-topbar { position: sticky; top: 0; z-index: 10; background: rgba(2,0,128,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--white-10); padding: 12px 24px; display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.modal-back-btn { display: flex; align-items: center; gap: 8px; background: var(--white-10); border: 1px solid var(--white-20); border-radius: 8px; padding: 6px 14px; color: var(--white-60); font-size: 12px; cursor: pointer; font-family: 'Space Mono', monospace; letter-spacing: 1px; transition: all 0.2s; text-decoration: none; }
 .modal-back-btn:hover { background: var(--white-20); color: white; }
-.modal-topbar-logo {
-font-family: 'Space Mono', monospace;
-font-size: 13px; letter-spacing: 4px; color: var(--white-40);
-margin-left: auto;
-}
-.modal {
-width: 100%; max-width: 720px;
-margin: 0 auto;
-padding: 48px 32px 80px;
-transform: translateY(20px);
-transition: transform 0.3s;
-}
-.modal-overlay.open .modal {
-transform: translateY(0);
-}
-.modal-close { display: none; }
+.modal-topbar-logo { font-family: 'Space Mono', monospace; font-size: 13px; letter-spacing: 4px; color: var(--white-40); margin-left: auto; }
+.modal { width: 100%; max-width: 720px; margin: 0 auto; padding: 48px 32px 80px; transform: translateY(20px); transition: transform 0.3s; }
+.modal-overlay.open .modal { transform: translateY(0); }
 .modal-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
-.modal-av {
-width: 40px; height: 40px; border-radius: 50%;
-background: #2200ff;
-display: flex; align-items: center; justify-content: center;
-font-family: 'Space Mono', monospace; font-size: 14px; flex-shrink: 0;
-}
+.modal-av { width: 40px; height: 40px; border-radius: 50%; background: #2200ff; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 14px; flex-shrink: 0; }
 .modal-name { font-size: 14px; font-weight: 500; }
 .modal-date { font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; margin-top: 2px; }
-.modal-type {
-margin-left: auto; font-size: 10px;
-font-family: 'Space Mono', monospace;
-background: var(--white-10); color: var(--white-60);
-padding: 4px 12px; border-radius: 20px; letter-spacing: 1px;
-}
-.modal-title {
-font-size: 26px; font-weight: 500; line-height: 1.4;
-margin-bottom: 20px; letter-spacing: -0.3px;
-}
+.modal-type { margin-left: auto; font-size: 10px; font-family: 'Space Mono', monospace; background: var(--white-10); color: var(--white-60); padding: 4px 12px; border-radius: 20px; letter-spacing: 1px; }
+.modal-title { font-size: 26px; font-weight: 500; line-height: 1.4; margin-bottom: 20px; letter-spacing: -0.3px; }
 .modal-divider { height: 1px; background: var(--white-10); margin-bottom: 24px; }
-.modal-body {
-font-size: 15px; color: var(--white-60); line-height: 1.9;
-margin-bottom: 28px;
-}
+.modal-body { font-size: 15px; color: var(--white-60); line-height: 1.9; margin-bottom: 28px; }
 .modal-body b { font-weight: 700; color: white; }
 .modal-body em { font-style: italic; }
 .modal-body u { text-decoration: underline; text-underline-offset: 3px; }
 .modal-body s { text-decoration: line-through; }
-.modal-body code {
-font-family: 'Space Mono', monospace;
-font-size: 12px;
-background: rgba(255,255,255,0.1);
-padding: 2px 6px; border-radius: 4px;
-color: #aef;
-}
+.modal-body code { font-family: 'Space Mono', monospace; font-size: 12px; background: rgba(255,255,255,0.1); padding: 2px 6px; border-radius: 4px; color: #aef; }
 .modal-body .notion-color-red { color: #ff7979; }
 .modal-body .notion-color-orange { color: #ffaa55; }
 .modal-body .notion-color-yellow { color: #ffe066; }
@@ -312,193 +120,154 @@ color: #aef;
 .modal-body .notion-color-purple { color: #cc88ff; }
 .modal-body .notion-color-pink { color: #ff88cc; }
 .modal-body .notion-color-gray { color: rgba(255,255,255,0.4); }
-.modal-video-link {
-display: flex; align-items: center; gap: 14px;
-background: rgba(255,255,255,0.05); border: 1px solid var(--white-20);
-border-radius: 14px; padding: 16px 20px;
-color: white; text-decoration: none; font-size: 14px;
-transition: background 0.2s; margin-bottom: 24px;
-}
+.modal-video-link { display: flex; align-items: center; gap: 14px; background: rgba(255,255,255,0.05); border: 1px solid var(--white-20); border-radius: 14px; padding: 16px 20px; color: white; text-decoration: none; font-size: 14px; transition: background 0.2s; margin-bottom: 24px; }
 .modal-video-link:hover { background: rgba(255,255,255,0.1); }
-.modal-play-icon {
-width: 40px; height: 40px; background: white; border-radius: 50%;
-display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-.modal-notion-btn {
-display: inline-flex; align-items: center; gap: 8px;
-border: 1px solid var(--white-20); border-radius: 10px;
-padding: 10px 22px; font-size: 12px;
-font-family: 'Space Mono', monospace; color: var(--white-60);
-text-decoration: none; transition: all 0.2s; margin-top: 8px;
-}
+.modal-play-icon { width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.modal-notion-btn { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--white-20); border-radius: 10px; padding: 10px 22px; font-size: 12px; font-family: 'Space Mono', monospace; color: var(--white-60); text-decoration: none; transition: all 0.2s; margin-top: 8px; }
 .modal-notion-btn:hover { border-color: white; color: white; }
-.board-section {
-padding: 0 32px 60px;
-max-width: 960px;
-margin: 0 auto;
-}
-.board-title {
-font-family: 'Space Mono', monospace;
-font-size: 11px; letter-spacing: 3px;
-color: var(--white-40); text-transform: uppercase;
-margin-bottom: 16px; padding-bottom: 12px;
-border-bottom: 1px solid var(--white-10);
-}
-.board-form {
-background: rgba(255,255,255,0.04);
-border: 1px solid var(--white-10);
-border-radius: 14px; padding: 20px; margin-bottom: 20px;
-display: flex; flex-direction: column; gap: 12px;
-}
-.board-form input, .board-form textarea {
-width: 100%;
-background: rgba(255,255,255,0.07);
-border: 1px solid var(--white-20);
-border-radius: 8px; padding: 10px 14px;
-color: white; font-size: 13px;
-font-family: 'Noto Sans JP', sans-serif;
-outline: none; resize: vertical;
-}
-.board-form input::placeholder, .board-form textarea::placeholder { color: var(--white-40); }
-.board-form input:focus, .board-form textarea:focus { border-color: var(--white-40); }
-.board-form textarea { min-height: 80px; }
-.board-submit {
-align-self: flex-end;
-background: white; color: var(--blue);
-border: none; border-radius: 8px;
-padding: 9px 22px; font-size: 13px;
-font-family: 'Space Mono', monospace;
-font-weight: 700; cursor: pointer; letter-spacing: 1px;
-transition: background 0.2s;
-}
-.board-submit:hover { background: #ddd; }
-.board-submit:disabled { background: #aaa; cursor: not-allowed; }
-.board-post {
-background: rgba(255,255,255,0.04);
-border: 1px solid var(--white-10);
-border-radius: 12px; padding: 16px; margin-bottom: 12px;
-transition: border-color 0.2s;
-}
-.board-post:hover { border-color: var(--white-20); }
-.board-post-meta {
-display: flex; align-items: center; gap: 10px; margin-bottom: 8px;
-}
-.board-av {
-width: 28px; height: 28px; border-radius: 50%;
-background: rgba(255,255,255,0.15);
-display: flex; align-items: center; justify-content: center;
-font-family: 'Space Mono', monospace; font-size: 11px; flex-shrink: 0;
-}
-.board-poster { font-size: 13px; font-weight: 500; }
-.board-ts { font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; margin-left: auto; }
-.board-body { font-size: 13px; color: var(--white-60); line-height: 1.7; white-space: pre-line; }
-.board-empty { font-size: 12px; color: var(--white-40); font-family: 'Space Mono', monospace; padding: 20px 0; }
-.post-image {
-width: 100%;
-border-radius: 10px;
-overflow: hidden;
-margin-bottom: 12px;
-background: rgba(255,255,255,0.05);
-aspect-ratio: 16/9;
-position: relative;
-}
-.post-image img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-display: block;
-border-radius: 10px;
-transition: transform 0.3s ease;
-}
-.post-card:hover .post-image img {
-transform: scale(1.03);
-}
-.post-image-count {
-position: absolute;
-bottom: 8px; right: 10px;
-font-size: 10px;
-font-family: 'Space Mono', monospace;
-color: white;
-background: rgba(0,0,0,0.55);
-padding: 2px 8px;
-border-radius: 20px;
-letter-spacing: 1px;
-}
-.modal-images {
-display: grid;
-gap: 8px;
-margin-bottom: 20px;
-border-radius: 12px;
-overflow: hidden;
-}
+
+/* ── 写真 ── */
+.post-image { width: 100%; border-radius: 10px; overflow: hidden; margin-bottom: 12px; background: rgba(255,255,255,0.05); aspect-ratio: 16/9; position: relative; }
+.post-image img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 10px; transition: transform 0.3s ease; }
+.post-card:hover .post-image img { transform: scale(1.03); }
+.post-image-count { position: absolute; bottom: 8px; right: 10px; font-size: 10px; font-family: 'Space Mono', monospace; color: white; background: rgba(0,0,0,0.55); padding: 2px 8px; border-radius: 20px; letter-spacing: 1px; }
+.modal-images { display: grid; gap: 8px; margin-bottom: 20px; border-radius: 12px; overflow: hidden; }
 .modal-images.count-1 { grid-template-columns: 1fr; }
 .modal-images.count-2 { grid-template-columns: 1fr 1fr; }
 .modal-images.count-3 { grid-template-columns: 1fr 1fr; }
 .modal-images.count-3 .modal-img-wrap:first-child { grid-column: 1 / -1; }
 .modal-images.count-many { grid-template-columns: 1fr 1fr; }
-.modal-img-wrap {
-overflow: hidden;
-border-radius: 8px;
-background: rgba(255,255,255,0.06);
-aspect-ratio: 4/3;
-cursor: zoom-in;
-}
-.modal-img-wrap img {
-width: 100%;
-height: 100%;
-object-fit: cover;
-display: block;
-transition: transform 0.3s ease;
-}
+.modal-img-wrap { overflow: hidden; border-radius: 8px; background: rgba(255,255,255,0.06); aspect-ratio: 4/3; cursor: zoom-in; }
+.modal-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.3s ease; }
 .modal-img-wrap:hover img { transform: scale(1.04); }
-.lightbox {
-position: fixed; inset: 0; z-index: 400;
-background: rgba(0,0,10,0.93);
-display: flex; align-items: center; justify-content: center;
-opacity: 0; pointer-events: none;
-transition: opacity 0.2s;
-}
+
+/* ── ライトボックス ── */
+.lightbox { position: fixed; inset: 0; z-index: 400; background: rgba(0,0,10,0.93); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
 .lightbox.open { opacity: 1; pointer-events: all; }
-.lightbox img {
-max-width: 92vw; max-height: 88vh;
-border-radius: 10px;
-object-fit: contain;
-box-shadow: 0 20px 80px rgba(0,0,0,0.8);
-}
-.lightbox-close {
-position: absolute; top: 20px; right: 20px;
-width: 36px; height: 36px; border-radius: 50%;
-background: rgba(255,255,255,0.12); border: none;
-color: white; font-size: 18px; cursor: pointer;
-display: flex; align-items: center; justify-content: center;
-}
+.lightbox img { max-width: 92vw; max-height: 88vh; border-radius: 10px; object-fit: contain; box-shadow: 0 20px 80px rgba(0,0,0,0.8); }
+.lightbox-close { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.12); border: none; color: white; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .lightbox-close:hover { background: rgba(255,255,255,0.25); }
-.lightbox-nav {
-position: absolute;
-top: 50%; transform: translateY(-50%);
-background: rgba(255,255,255,0.12); border: none;
-color: white; font-size: 22px; cursor: pointer;
-width: 44px; height: 44px; border-radius: 50%;
-display: flex; align-items: center; justify-content: center;
-transition: background 0.2s;
-}
+.lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.12); border: none; color: white; font-size: 22px; cursor: pointer; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
 .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
 .lightbox-prev { left: 20px; }
 .lightbox-next { right: 20px; }
-.lightbox-counter {
-position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-font-size: 11px; color: rgba(255,255,255,0.5);
-font-family: 'Space Mono', monospace; letter-spacing: 2px;
+.lightbox-counter { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-size: 11px; color: rgba(255,255,255,0.5); font-family: 'Space Mono', monospace; letter-spacing: 2px; }
+
+/* ── コメントセクション ── */
+.comments-section {
+  margin-top: 40px;
+  border-top: 1px solid var(--white-10);
+  padding-top: 32px;
 }
+.comments-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; letter-spacing: 3px;
+  color: var(--white-40); text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+  min-height: 0;
+}
+.comment-item {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--white-10);
+  border-radius: 12px;
+  padding: 14px 16px;
+  transition: border-color 0.2s;
+}
+.comment-item:hover { border-color: var(--white-20); }
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.comment-av {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Mono', monospace; font-size: 10px; flex-shrink: 0;
+}
+.comment-name { font-size: 13px; font-weight: 500; }
+.comment-ts { font-size: 11px; color: var(--white-40); font-family: 'Space Mono', monospace; margin-left: auto; }
+.comment-body { font-size: 13px; color: var(--white-60); line-height: 1.7; white-space: pre-line; }
+.comments-empty {
+  font-size: 12px; color: var(--white-40);
+  font-family: 'Space Mono', monospace;
+  padding: 16px 0;
+  letter-spacing: 1px;
+}
+.comments-loading {
+  font-size: 12px; color: var(--white-40);
+  font-family: 'Space Mono', monospace;
+  padding: 16px 0;
+  letter-spacing: 1px;
+}
+
+/* コメント投稿フォーム */
+.comment-form {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--white-10);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid var(--white-20);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: white;
+  font-size: 13px;
+  font-family: 'Noto Sans JP', sans-serif;
+  outline: none;
+  resize: vertical;
+}
+.comment-form input::placeholder,
+.comment-form textarea::placeholder { color: var(--white-40); }
+.comment-form input:focus,
+.comment-form textarea:focus { border-color: var(--white-40); }
+.comment-form textarea { min-height: 72px; }
+.comment-form-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.comment-form-row input { flex: 1; }
+.comment-submit {
+  background: white;
+  color: var(--blue);
+  border: none;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 12px;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.comment-submit:hover { background: #ddd; }
+.comment-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
 @media (max-width: 680px) {
-.layout { flex-direction: column; padding: 0 16px 40px; }
-.sidebar { width: 100%; position: static; }
-header { padding: 14px 16px; }
-.profile-row { padding: 0 16px; }
-.board-section { padding: 0 16px 40px; }
-.modal { padding: 32px 20px 60px; }
-.modal-title { font-size: 20px; }
-.modal-topbar { padding: 10px 16px; }
+  .layout { flex-direction: column; padding: 0 16px 40px; }
+  .sidebar { width: 100%; position: static; }
+  header { padding: 14px 16px; }
+  .profile-row { padding: 0 16px; }
+  .modal { padding: 32px 20px 60px; }
+  .modal-title { font-size: 20px; }
+  .modal-topbar { padding: 10px 16px; }
 }
 </style>
 </head>
@@ -560,27 +329,31 @@ header { padding: 14px 16px; }
       </div>
     </div>
   </div>
-
-  <div class="board-section">
-    <div class="board-title">📌 掲示板 — みんなの声</div>
-    <div class="board-form">
-      <input type="text" id="board-name" placeholder="名前（任意）" maxlength="30" />
-      <textarea id="board-msg" placeholder="メッセージを書く..." maxlength="400"></textarea>
-      <button class="board-submit" id="board-btn" onclick="submitBoard()">投稿する</button>
-    </div>
-    <div id="board-posts"></div>
-  </div>
 </div>
 
-<!-- 投稿詳細モーダル -->
+<!-- ── 投稿詳細モーダル ── -->
 <div class="modal-overlay" id="modal-overlay">
   <div class="modal-topbar">
     <button class="modal-back-btn" onclick="closeModal()">← 戻る</button>
     <div class="modal-topbar-logo">ORBITT</div>
   </div>
   <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
     <div id="modal-content"></div>
+
+    <!-- コメントセクション -->
+    <div class="comments-section">
+      <div class="comments-title">💬 コメント</div>
+      <div class="comments-list" id="comments-list">
+        <div class="comments-loading">読み込み中...</div>
+      </div>
+      <div class="comment-form">
+        <div class="comment-form-row">
+          <input type="text" id="comment-name" placeholder="名前（任意）" maxlength="30" />
+          <button class="comment-submit" id="comment-submit-btn" onclick="submitComment()">送信</button>
+        </div>
+        <textarea id="comment-msg" placeholder="コメントを書く..." maxlength="400"></textarea>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -593,100 +366,43 @@ header { padding: 14px 16px; }
   <div class="lightbox-counter" id="lightbox-counter"></div>
 </div>
 
-<!-- =====================================================
-     Firebase SDK（ここから）
-     ===================================================== -->
+<!-- ── Firebase SDK ── -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    query,
-    orderBy,
-    onSnapshot,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/11.9.1/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import { getFirestore, collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp, getCountFromServer } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
 
-  // ── Firebase設定 ──
-  const firebaseConfig = {
-    apiKey: "AIzaSyBW0fUMMA1k6lQ2gfadFTUZ6dfgf4bZ8bM",
-    authDomain: "orbitt-web.firebaseapp.com",
-    projectId: "orbitt-web",
-    storageBucket: "orbitt-web.firebasestorage.app",
-    messagingSenderId: "430890162329",
-    appId: "1:430890162329:web:0fa9bae1938df2be27c008",
-    measurementId: "G-NPYLPD85K5"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBW0fUMMA1k6lQ2gfadFTUZ6dfgf4bZ8bM",
+  authDomain: "orbitt-web.firebaseapp.com",
+  projectId: "orbitt-web",
+  storageBucket: "orbitt-web.firebasestorage.app",
+  messagingSenderId: "430890162329",
+  appId: "1:430890162329:web:0fa9bae1938df2be27c008",
+  measurementId: "G-NPYLPD85K5"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-  // ── 掲示板：リアルタイム読み込み ──
-  function startBoardListener() {
-    const q = query(collection(db, "board_posts"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
-      const el = document.getElementById('board-posts');
-      if (snapshot.empty) {
-        el.innerHTML = '<div class="board-empty">まだ投稿がありません。最初に書いてみよう！</div>';
-        return;
-      }
-      el.innerHTML = snapshot.docs.map(doc => {
-        const d = doc.data();
-        const initials = (d.name || '?').slice(0, 2).toUpperCase();
-        const ts = d.createdAt?.toDate
-          ? d.createdAt.toDate().toLocaleDateString('ja-JP', {month:'2-digit', day:'2-digit'}).replace('/', '.') +
-            ' ' + d.createdAt.toDate().toLocaleTimeString('ja-JP', {hour:'2-digit', minute:'2-digit'})
-          : '';
-        return `
-          <div class="board-post">
-            <div class="board-post-meta">
-              <div class="board-av">${initials}</div>
-              <div class="board-poster">${escHtml(d.name || '匿名')}</div>
-              <div class="board-ts">${ts}</div>
-            </div>
-            <div class="board-body">${escHtml(d.msg)}</div>
-          </div>`;
-      }).join('');
-    });
-  }
-
-  // ── 掲示板：投稿 ──
-  window.submitBoard = async function() {
-    const name = document.getElementById('board-name').value.trim() || '匿名';
-    const msg  = document.getElementById('board-msg').value.trim();
-    if (!msg) return;
-
-    const btn = document.getElementById('board-btn');
-    btn.disabled = true;
-    btn.textContent = '送信中...';
-
-    try {
-      await addDoc(collection(db, "board_posts"), {
-        name,
-        msg,
-        createdAt: serverTimestamp()
-      });
-      document.getElementById('board-msg').value = '';
-    } catch (e) {
-      alert('投稿に失敗しました。もう一度試してください。');
-      console.error(e);
-    } finally {
-      btn.disabled = false;
-      btn.textContent = '投稿する';
-    }
-  };
-
-  // ログイン後に掲示板リスナーを起動
-  window._startBoardListener = startBoardListener;
+// グローバルに公開
+window._db = db;
+window._collection = collection;
+window._addDoc = addDoc;
+window._query = query;
+window._where = where;
+window._orderBy = orderBy;
+window._onSnapshot = onSnapshot;
+window._serverTimestamp = serverTimestamp;
+window._getCountFromServer = getCountFromServer;
+window._firebaseReady = true;
+window.dispatchEvent(new Event('firebaseReady'));
 </script>
-<!-- =====================================================
-     Firebase SDK（ここまで）
-     ===================================================== -->
 
 <script>
 const PASSWORD = 'orbitt2026';
 let allPosts = [];
+let currentPostId = null;
+let unsubscribeComments = null;
 
 function tryLogin() {
   const val = document.getElementById('pw-input').value;
@@ -694,13 +410,10 @@ function tryLogin() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('site').style.display = 'block';
     loadPosts();
-    // Firebase掲示板リスナー起動
-    if (window._startBoardListener) window._startBoardListener();
   } else {
     document.getElementById('login-err').style.display = 'block';
   }
 }
-
 document.getElementById('pw-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') tryLogin();
 });
@@ -764,7 +477,7 @@ function getPostData(post) {
 }
 
 function extractImageUrls(props) {
-  const candidates = ['Photo', 'Photos', 'Image', 'Images', 'Files', 'ファイル', '画像', '写真'];
+  const candidates = ['Photo','Photos','Image','Images','Files','ファイル','画像','写真'];
   for (const key of candidates) {
     const prop = props[key];
     if (!prop) continue;
@@ -772,8 +485,11 @@ function extractImageUrls(props) {
       return prop.files.map(f => f.file?.url || f.external?.url).filter(Boolean);
     }
   }
-  if (props._cover) return [props._cover];
   return [];
+}
+
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 function renderPosts(posts) {
@@ -784,12 +500,8 @@ function renderPosts(posts) {
   }
   container.innerHTML = posts.map((post, idx) => {
     const { title, type, body, videoUrl, dateLabel, isNew, imageUrls } = getPostData(post);
-    const videoBadge = videoUrl
-      ? `<div class="video-badge"><div class="play-dot"></div>動画あり</div>`
-      : '';
-    const previewText = body
-      ? `<div class="post-preview">${escHtml(body)}</div>`
-      : '';
+    const videoBadge = videoUrl ? `<div class="video-badge"><div class="play-dot"></div>動画あり</div>` : '';
+    const previewText = body ? `<div class="post-preview">${escHtml(body)}</div>` : '';
     const imgPreview = imageUrls.length
       ? `<div class="post-image">
           <img src="${imageUrls[0]}" alt="${escHtml(title)}" loading="lazy" onerror="this.parentElement.style.display='none'">
@@ -818,13 +530,14 @@ function renderPosts(posts) {
   }).join('');
 }
 
-let currentPostIdx = -1;
-
+// ── モーダル ──
 function openModal(idx) {
-  currentPostIdx = idx;
   const post = allPosts[idx];
   if (!post) return;
+  currentPostId = post.id;
+
   const { title, type, body, bodyHtml, videoUrl, notionUrl, dateLabel, isNew, imageUrls } = getPostData(post);
+
   const videoSection = videoUrl ? `
     <a href="${videoUrl}" target="_blank" class="modal-video-link">
       <div class="modal-play-icon">
@@ -834,17 +547,16 @@ function openModal(idx) {
       </div>
       <span>動画を見る</span>
     </a>` : '';
+
   const notionSection = notionUrl ? `
     <a href="${notionUrl}" target="_blank" class="modal-notion-btn">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4.459 4.208c.746.606 1.026.56 2.428.466l13.215-.793c.28 0 .047-.28-.046-.326L17.86 1.968c-.42-.326-.981-.7-2.055-.607L3.01 2.295c-.466.046-.56.28-.374.466zm.793 3.08v13.904c0 .747.373 1.027 1.214.98l14.523-.84c.841-.046.935-.56.935-1.167V6.354c0-.606-.233-.933-.748-.887l-15.177.887c-.56.047-.747.327-.747.933zm14.337.745c.093.42 0 .84-.42.888l-.7.14v10.264c-.608.327-1.168.514-1.635.514-.748 0-.935-.234-1.495-.933l-4.577-7.19v6.952L12.21 19s0 .84-1.168.84l-3.222.186c-.093-.186 0-.653.327-.746l.84-.233V9.854L7.822 9.76c-.094-.42.14-1.026.793-1.073l3.456-.233 4.764 7.284V9.197l-1.215-.14c-.093-.514.28-.887.747-.933zM1.936 1.035l13.31-.98c1.634-.14 2.055-.047 3.082.7l4.249 2.986c.7.513.934.653.934 1.213v16.378c0 1.026-.373 1.634-1.68 1.726l-15.458.934c-.98.047-1.448-.093-1.962-.747l-3.129-4.06c-.56-.747-.793-1.306-.793-1.96V2.667c0-.839.374-1.54 1.447-1.632z"/></svg>
       Notion で全文を見る
     </a>` : '';
+
   let imagesSection = '';
   if (imageUrls.length) {
-    const countClass = imageUrls.length === 1 ? 'count-1'
-      : imageUrls.length === 2 ? 'count-2'
-      : imageUrls.length === 3 ? 'count-3'
-      : 'count-many';
+    const countClass = imageUrls.length === 1 ? 'count-1' : imageUrls.length === 2 ? 'count-2' : imageUrls.length === 3 ? 'count-3' : 'count-many';
     const shown = imageUrls.slice(0, 4);
     const imgItems = shown.map((url, i) =>
       `<div class="modal-img-wrap" onclick="openLightbox(event, ${idx}, ${i})">
@@ -853,6 +565,7 @@ function openModal(idx) {
     ).join('');
     imagesSection = `<div class="modal-images ${countClass}">${imgItems}</div>`;
   }
+
   document.getElementById('modal-content').innerHTML = `
     <div class="modal-meta">
       <div class="modal-av">R</div>
@@ -869,19 +582,117 @@ function openModal(idx) {
     ${videoSection}
     ${notionSection}
   `;
+
   document.getElementById('modal-overlay').classList.add('open');
   document.getElementById('modal-overlay').scrollTop = 0;
   document.body.style.overflow = 'hidden';
+
+  // コメント欄をリセットしてロード
+  document.getElementById('comments-list').innerHTML = '<div class="comments-loading">読み込み中...</div>';
+  document.getElementById('comment-msg').value = '';
+  loadComments(post.id);
 }
 
 function closeModal() {
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  currentPostId = null;
+  // リアルタイムリスナーを解除
+  if (unsubscribeComments) {
+    unsubscribeComments();
+    unsubscribeComments = null;
+  }
 }
 
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeModal();
 });
+
+// ── コメント読み込み（リアルタイム） ──
+function loadComments(postId) {
+  if (!window._firebaseReady) {
+    window.addEventListener('firebaseReady', () => loadComments(postId), { once: true });
+    return;
+  }
+
+  // 前のリスナーを解除
+  if (unsubscribeComments) {
+    unsubscribeComments();
+    unsubscribeComments = null;
+  }
+
+  const db = window._db;
+  const q = window._query(
+    window._collection(db, 'comments'),
+    window._where('postId', '==', postId),
+    window._orderBy('createdAt', 'asc')
+  );
+
+  unsubscribeComments = window._onSnapshot(q, (snapshot) => {
+    const list = document.getElementById('comments-list');
+    if (!list) return;
+
+    if (snapshot.empty) {
+      list.innerHTML = '<div class="comments-empty">まだコメントがありません。最初に書いてみよう！</div>';
+      return;
+    }
+
+    list.innerHTML = snapshot.docs.map(doc => {
+      const d = doc.data();
+      const name = d.name || '匿名';
+      const initials = name.slice(0, 2).toUpperCase();
+      const ts = d.createdAt?.toDate
+        ? formatTs(d.createdAt.toDate())
+        : '—';
+      return `
+        <div class="comment-item">
+          <div class="comment-header">
+            <div class="comment-av">${initials}</div>
+            <div class="comment-name">${escHtml(name)}</div>
+            <div class="comment-ts">${ts}</div>
+          </div>
+          <div class="comment-body">${escHtml(d.message)}</div>
+        </div>`;
+    }).join('');
+  });
+}
+
+function formatTs(date) {
+  return date.toLocaleDateString('ja-JP', { month:'2-digit', day:'2-digit' }).replace('/','.') +
+    ' ' + date.toLocaleTimeString('ja-JP', { hour:'2-digit', minute:'2-digit' });
+}
+
+// ── コメント投稿 ──
+async function submitComment() {
+  if (!currentPostId) return;
+  const name = document.getElementById('comment-name').value.trim() || '匿名';
+  const message = document.getElementById('comment-msg').value.trim();
+  if (!message) return;
+
+  if (!window._firebaseReady) return;
+
+  const btn = document.getElementById('comment-submit-btn');
+  btn.disabled = true;
+  btn.textContent = '送信中...';
+
+  try {
+    await window._addDoc(window._collection(window._db, 'comments'), {
+      postId: currentPostId,
+      name,
+      message,
+      createdAt: window._serverTimestamp()
+    });
+    document.getElementById('comment-msg').value = '';
+  } catch (e) {
+    alert('送信に失敗しました。もう一度お試しください。');
+    console.error(e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '送信';
+  }
+}
+
+window.submitComment = submitComment;
 
 function filterPosts(type, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -893,11 +704,7 @@ function filterPosts(type, btn) {
   renderPosts(filtered);
 }
 
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ライトボックス
+// ── ライトボックス ──
 let lbImages = [];
 let lbIndex = 0;
 
@@ -942,8 +749,16 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') lbNav(1);
   if (e.key === 'ArrowLeft') lbNav(-1);
 });
-</script>
 
+// グローバル公開
+window.tryLogin = tryLogin;
+window.filterPosts = filterPosts;
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
+window.closeLightboxOutside = closeLightboxOutside;
+window.lbNav = lbNav;
+</script>
 </body>
 </html>
-
