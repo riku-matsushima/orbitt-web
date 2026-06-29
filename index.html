@@ -334,7 +334,7 @@ async function tryLogin() {
   btn.textContent = '...';
 
   try {
-    const res = await fetch('https://script.google.com/macros/s/YOUR_GAS_DEPLOY_ID/exec', {
+    const res = await fetch('https://script.google.com/macros/s/AKfycbwMDk0Q04vZDiZ_omfewS4UVyh9UB03X8rLs-HVuCB_E99M1_F7_Wn-3zZedKsx2Q/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ action: 'auth', password: val })
