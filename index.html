@@ -215,13 +215,6 @@ header .inner { display: flex; align-items: center; justify-content: space-betwe
   <div class="banner">
     <div class="banner-text">EXCLUSIVE MEMBERS CONTENT</div>
   </div>
-  <div class="profile-row">
-    <div class="avatar">R</div>
-    <div>
-      <div class="profile-name">Riku Matsushima</div>
-      <div class="profile-sub">限定コンテンツ</div>
-    </div>
-  </div>
   <div class="layout">
     <div class="feed">
       <div class="filters">
@@ -317,11 +310,11 @@ window.dispatchEvent(new Event('firebaseReady'));
 let allPosts = [];
 let currentPostId = null;
 let unsubscribeComments = null;
-let commentCounts = {}; // postId => count
+let commentCounts = {};
 let lastCommentTime = 0;
 const RATE_LIMIT_MS = 30000;
 
-// ── ③ sessionStorageでログイン維持 ──
+// ── sessionStorageでログイン維持 ──
 function isLoggedIn() {
   return sessionStorage.getItem('orbitt_auth') === 'ok';
 }
@@ -332,7 +325,7 @@ if (isLoggedIn()) {
   loadPosts();
 }
 
-// ── ① パスワード認証（サーバーサイド） ──
+// ── パスワード認証 ──
 async function tryLogin() {
   const val = document.getElementById('pw-input').value;
   if (!val) return;
@@ -371,13 +364,12 @@ document.getElementById('pw-input').addEventListener('keydown', e => {
 // ── 投稿読み込み ──
 async function loadPosts() {
   try {
-  const res = await fetch('https://script.google.com/macros/s/AKfycbzHVZdRNV8OG3dZsI7fj28DkvsOiKPC9qseyvEMRDsbW40d-tvTXIwGsCWSbFgO88U9/exec');
+    const res = await fetch('https://script.google.com/macros/s/AKfycbzHVZdRNV8OG3dZsI7fj28DkvsOiKPC9qseyvEMRDsbW40d-tvTXIwGsCWSbFgO88U9/exec');
     if (!res.ok) throw new Error('API error');
     const data = await res.json();
     allPosts = data.results || [];
     document.getElementById('post-count').textContent = allPosts.length;
     renderPosts(allPosts);
-    // ⑤ コメント数を非同期で取得
     loadAllCommentCounts();
   } catch (e) {
     document.getElementById('posts-container').innerHTML =
@@ -385,14 +377,13 @@ async function loadPosts() {
   }
 }
 
-// ── ⑤ 全投稿のコメント数をFirestoreから取得 ──
+// ── 全投稿のコメント数をFirestoreから取得 ──
 function loadAllCommentCounts() {
   if (!window._firebaseReady) {
     window.addEventListener('firebaseReady', loadAllCommentCounts, { once: true });
     return;
   }
   const db = window._db;
-  // 全commentsをリアルタイムで監視してカード上のカウントを更新
   window._onSnapshot(
     window._collection(db, 'comments'),
     (snapshot) => {
@@ -453,7 +444,10 @@ function getPostData(post) {
   const isNew = (new Date() - postDate) / (1000*60*60*24) <= 3;
   const dateLabel = postDate.toLocaleDateString('ja-JP', { year:'numeric', month:'2-digit', day:'2-digit' }).replace(/\//g,'.');
   const imageUrls = extractImageUrls(props);
-  return { title, type, body, bodyHtml, videoUrl, notionUrl, dateLabel, isNew, imageUrls };
+  // ── 投稿者をNotionの「投稿者」プロパティから取得 ──
+  const author = props.投稿者?.rich_text?.[0]?.plain_text || 'ORBITT';
+  const authorInitial = author.slice(0, 1).toUpperCase();
+  return { title, type, body, bodyHtml, videoUrl, notionUrl, dateLabel, isNew, imageUrls, author, authorInitial };
 }
 
 function extractImageUrls(props) {
@@ -478,7 +472,7 @@ function renderPosts(posts) {
     return;
   }
   container.innerHTML = posts.map((post, idx) => {
-    const { title, type, body, videoUrl, dateLabel, isNew, imageUrls } = getPostData(post);
+    const { title, type, body, videoUrl, dateLabel, isNew, imageUrls, author, authorInitial } = getPostData(post);
     const videoBadge = videoUrl ? `<div class="video-badge"><div class="play-dot"></div>動画あり</div>` : '';
     const previewText = body ? `<div class="post-preview">${escHtml(body)}</div>` : '';
     const imgPreview = imageUrls.length
@@ -486,15 +480,14 @@ function renderPosts(posts) {
           <img src="${imageUrls[0]}" alt="${escHtml(title)}" loading="lazy" onerror="this.parentElement.style.display='none'">
           ${imageUrls.length > 1 ? `<div class="post-image-count">+${imageUrls.length}</div>` : ''}
         </div>` : '';
-    // ⑤ コメント数バッジ
     const count = commentCounts[post.id] || 0;
     const countLabel = count > 0 ? `💬 ${count}` : '💬 0';
     return `
       <div class="post-card" data-type="${type}" onclick="openModal(${idx})">
         <div class="post-meta">
-          <div class="post-av">R</div>
+          <div class="post-av">${escHtml(authorInitial)}</div>
           <div>
-            <div class="post-name">Riku ${isNew ? '<span style="font-size:10px;color:#ff3366;font-family:Space Mono,monospace;margin-left:6px">NEW</span>' : ''}</div>
+            <div class="post-name">${escHtml(author)}${isNew ? '<span style="font-size:10px;color:#ff3366;font-family:Space Mono,monospace;margin-left:6px">NEW</span>' : ''}</div>
             <div class="post-date">${dateLabel}</div>
           </div>
           ${type ? `<div class="post-type">${type}</div>` : ''}
@@ -516,7 +509,7 @@ function openModal(idx) {
   const post = allPosts[idx];
   if (!post) return;
   currentPostId = post.id;
-  const { title, type, body, bodyHtml, videoUrl, notionUrl, dateLabel, isNew, imageUrls } = getPostData(post);
+  const { title, type, body, bodyHtml, videoUrl, notionUrl, dateLabel, isNew, imageUrls, author, authorInitial } = getPostData(post);
 
   const videoSection = videoUrl ? `
     <a href="${videoUrl}" target="_blank" class="modal-video-link">
@@ -545,9 +538,9 @@ function openModal(idx) {
 
   document.getElementById('modal-content').innerHTML = `
     <div class="modal-meta">
-      <div class="modal-av">R</div>
+      <div class="modal-av">${escHtml(authorInitial)}</div>
       <div>
-        <div class="modal-name">Riku ${isNew ? '<span style="font-size:10px;color:#ff3366;font-family:Space Mono,monospace;margin-left:6px">NEW</span>' : ''}</div>
+        <div class="modal-name">${escHtml(author)}${isNew ? '<span style="font-size:10px;color:#ff3366;font-family:Space Mono,monospace;margin-left:6px">NEW</span>' : ''}</div>
         <div class="modal-date">${dateLabel}</div>
       </div>
       ${type ? `<div class="modal-type">${type}</div>` : ''}
@@ -616,7 +609,6 @@ function loadComments(postId) {
       const name = d.name || '匿名';
       const initials = name.slice(0,2).toUpperCase();
       const ts = d.createdAt?.toDate ? formatTs(d.createdAt.toDate()) : '—';
-      // 最後のコメントに is-new クラス（送信直後の演出）
       const isLatest = !isFirstLoad && i === docs.length - 1;
       return `
         <div class="comment-item${isLatest ? ' is-new' : ''}" id="comment-${doc.id}">
@@ -629,7 +621,6 @@ function loadComments(postId) {
         </div>`;
     }).join('');
 
-    // ⑥ 送信後は最新コメントまでスクロール
     if (!isFirstLoad) {
       const lastEl = list.lastElementChild;
       if (lastEl) lastEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -642,11 +633,10 @@ function formatTs(date) {
     ' ' + date.toLocaleTimeString('ja-JP', { hour:'2-digit', minute:'2-digit' });
 }
 
-// ── ④ コメント投稿（レート制限付き） ──
+// ── コメント投稿（レート制限付き） ──
 async function submitComment() {
   if (!currentPostId) return;
 
-  // レート制限チェック
   const now = Date.now();
   const rateLimitEl = document.getElementById('rate-limit-msg');
   if (now - lastCommentTime < RATE_LIMIT_MS) {
