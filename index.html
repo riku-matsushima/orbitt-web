@@ -334,11 +334,12 @@ async function tryLogin() {
   btn.textContent = '...';
 
   try {
-    const res = await fetch('/.netlify/functions/auth', {
+    const res = await fetch('https://script.google.com/macros/s/YOUR_GAS_DEPLOY_ID/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password: val })
+      body: JSON.stringify({ action: 'auth', password: val })
     });
+    
     const data = await res.json();
     if (data.ok) {
       sessionStorage.setItem('orbitt_auth', 'ok');
