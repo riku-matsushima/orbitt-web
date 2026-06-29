@@ -365,7 +365,7 @@ document.getElementById('pw-input').addEventListener('keydown', e => {
 // ── 投稿読み込み ──
 async function loadPosts() {
   try {
-    const res = await fetch('https://script.google.com/macros/s/AKfycbzHVZdRNV8OG3dZsI7fj28DkvsOiKPC9qseyvEMRDsbW40d-tvTXIwGsCWSbFgO88U9/exec');
+    const res = await fetch('https://script.google.com/macros/s/AKfycbwMDk0Q04vZDiZ_omfewS4UVyh9UB03X8rLs-HVuCB_E99M1_F7_Wn-3zZedKsx2Q/exec');
     if (!res.ok) throw new Error('API error');
     const data = await res.json();
     allPosts = data.results || [];
